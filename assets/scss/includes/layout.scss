@@ -1,0 +1,20 @@
+/*
+|--------------------------------------------------------------------------
+| Layout
+|--------------------------------------------------------------------------
+*/
+
+#account {
+	text-align: right;
+	background-color: darken($color_white,5%);
+	font-size: 12px;
+	padding: 7px 14px;
+}
+
+header {
+	text-align: center;
+	font-weight: bold;
+	font-size: 28px;
+	padding: 20px;
+	border-bottom: 1px solid darken($color_white,5%);
+}
