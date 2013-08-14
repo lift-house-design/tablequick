@@ -90,9 +90,9 @@ class Module
 
 	protected $_ci;
 
-	public function __construct($CI)
+	public function __construct()
 	{
-		$this->_ci=$CI;
+		$this->_ci=get_instance();
 
 		// Determine the module type and key
 		$classname=strtolower(get_class($this));
@@ -121,9 +121,9 @@ class Admin_module extends Module
 
 	public $css=array();
 
-	public function __construct($CI)
+	public function __construct()
 	{
-		parent::__construct($CI);
+		parent::__construct();
 
 		$this->_ci->nav[$this->key]=$this->name;
 	}

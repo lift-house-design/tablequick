@@ -1,14 +1,3 @@
-<div id="account">
-	<div class="wrapper">
-		Welcome, Nick Niebaum
-	</div>
-</div>
-<div class="wrapper">
-	<header>
-		TableQuick
-	</header>
-	<div id="content">
-		<h1>Some Title</h1>
-		<p>Content goes here. Content goes here. Content goes here. Content goes here. Content goes here.</p>
-	</div>
-</div>
+<h1>Welcome to TableQuick!</h1>
+<p>Introduction paragraph goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed magna risus, dignissim ac bibendum et, viverra in lorem. Aenean ut viverra quam. Proin vehicula sapien id congue fermentum. Sed viverra sodales mi sit amet venenatis. Nullam augue dui, scelerisque eu nisl vel, rhoncus sagittis massa. Nulla non lectus gravida tellus blandit luctus. Suspendisse non turpis dignissim, condimentum metus at, varius enim.</p>
+<div class="align-center"><?php echo anchor('sign-up','Click Here to Sign Up for a Free 30-day Trial!') ?></div>

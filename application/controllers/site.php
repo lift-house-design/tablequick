@@ -7,6 +7,30 @@ class Site extends App_Controller
 		
 	}
 
+	public function log_in()
+	{
+		if($this->input->post())
+		{
+			echo __LINE__.'|';
+			if($this->user->log_in())
+			{
+				echo __LINE__.'|';
+				redirect('dashboard');
+			}
+		}
+	}
+
+	public function log_out()
+	{
+		$this->user->log_out();
+		redirect('/');
+	}
+
+	public function sign_up()
+	{
+		
+	}
+
 	public function authentication_error(){}
 
 	public function send_test_notification()

@@ -48,5 +48,9 @@ $route['administration/log_out']='administration/log_out';
 
 $route['administration/(.+)']='administration/module/$1';
 
+$route['log-in']='site/log_in';
+$route['log-out']='site/log_out';
+$route['sign-up']='site/sign_up';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
