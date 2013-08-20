@@ -93,7 +93,7 @@ class Dashboard extends App_Controller
 			$data[]=$item;
 		}
 
-		echo json_encode($data,TRUE);
+		echo json_encode($data);
 	}
 
 	public function remove_customer($id)
