@@ -32,6 +32,16 @@ function refreshTable(callback)
 	});
 }
 
+setInterval(function(){
+	/*$('<div class="refresh-notice">')
+		.html('Refreshing data...')
+		.prependTo('#contents');*/
+
+	refreshTable(/*function(){
+		$('.refresh-notice').remove();
+	}*/);
+},5000);
+
 $(function(){
 	$('#customer-table').dataTable({
 		sPaginationType: 'full_numbers',

@@ -31,6 +31,15 @@ class Dashboard extends App_Controller
 			'file'=>'jquery.fancybox.css',
 			'type'=>'plugins/fancybox2',
 		);
+		// Load pines notify
+		$this->js[]=array(
+			'file'=>'jquery.pnotify.min.js',
+			'type'=>'plugins/pnotify',
+		);
+		$this->css[]=array(
+			'file'=>'jquery.pnotify.default.css',
+			'type'=>'plugins/pnotify',
+		);
 		$this->js[]='jquery.maskedinput.min.js';
 		$this->js[]='pages/dashboard-index.js';
 	}

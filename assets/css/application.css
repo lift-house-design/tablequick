@@ -539,6 +539,13 @@ header {
 | Pages - Dashboard
 |--------------------------------------------------------------------------
 */
+.refresh-notice {
+  text-align: center;
+  padding: 10px;
+  color: #0072c6;
+  font-size: 12px;
+  visibility: hidden; }
+
 #dashboard-controls {
   background-color: #f2f2f2;
   padding: 10px;

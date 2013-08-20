@@ -16,6 +16,14 @@
 |--------------------------------------------------------------------------
 */
 
+.refresh-notice {
+	text-align: center;
+	padding: 10px;
+	color: $color_blue;
+	font-size: 12px;
+	visibility: hidden;
+}
+
 #dashboard-controls {
 	background-color: darken($color_white,5%);
 	padding: 10px;
