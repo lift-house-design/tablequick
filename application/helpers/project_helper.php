@@ -154,5 +154,20 @@ if(!function_exists('send_sms'))
 	}
 }
 
+if(!function_exists('parse_phone'))
+{
+	function parse_phone($str)
+	{
+		$regexp='/\(?(\d{3})\)?\s?(\d{3})[-\s]?(\d{4})/';
+
+		if(preg_match($regexp,$str,$matches) && count($matches)>=4)
+		{
+			return '('.$matches[1].') '.$matches[2].'-'.$matches[3];
+		}
+		else
+			return FALSE;
+	}
+}
+
 /* End of file project_helper.php */
 /* Location: ./application/helpers/project_helper.php */

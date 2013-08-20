@@ -128,5 +128,44 @@ $config['sms_notifications']=array(
 	),
 );
 
+/*
+|--------------------------------------------------------------------------
+| SMS Response Keywords
+|--------------------------------------------------------------------------
+|
+| 'okay'				Array of keywords that indicates a patron is on
+|						his or her way
+|
+| 'stay_at_bar'			Array of keywords that indicates a patron has
+|						chosen to stay at the bar
+|
+| 'cancel'				Array of keywords that indicates a patron would
+| 						no longer like to be on the list
+|
+*/
+$config['response_keywords']=array(
+	'okay'=>array(
+		'ok',
+		'okay',
+		'on our way',
+		'on my way',
+		'coming',
+		'omw',
+		'be right there',
+		'brt',
+		'otw',
+		'yes',
+	),
+	'stay_at_bar'=>array(
+		'stay at bar',
+		'staying',
+	),
+	'cancel'=>array(
+		'cancel',
+		'no',
+		'not here',
+	),
+);
+
 /* End of file app.php */
 /* Location: ./application/config/app.php */

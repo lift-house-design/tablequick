@@ -89,6 +89,19 @@ CREATE  TABLE IF NOT EXISTS `patron` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `sms_exception`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `sms_exception` ;
+
+CREATE  TABLE IF NOT EXISTS `sms_exception` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `error` VARCHAR(128) NOT NULL ,
+  `data` TEXT NOT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

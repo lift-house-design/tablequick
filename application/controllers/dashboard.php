@@ -198,12 +198,97 @@ class Dashboard extends App_Controller
 
 	public function process_sms()
 	{
-		ob_start();
-		var_dump($_POST);
-		$data=ob_get_clean();
+		try
+		{
+			if($data=$this->input->post())
+			{
+				if(isset($data['From']) && isset($data['Body']))
+				{
+					$from_phone=$data['From'];
+					$message=$data['Body'];
 
-		$sql='insert into logger (data) values ('.$this->db->escape($data).')';
-		$this->db->query($sql);
+					// Parse out the 10-digit phone number
+					$regexp='/(\+1)?(\d{10})/';
+					preg_match($regexp,$from_phone,$matches);
+
+					if(count($matches)!=3)
+						throw new Exception('From phone number in an unexpected format');
+					// Should now have a phone number like 5551114444
+					$from_phone=$matches[2];
+					// Should now have a phone number like (555) 111-4444
+					$from_phone=parse_phone($from_phone);
+
+					if($from_phone===FALSE)
+						throw new Exception('From phone number unable to be formatted');
+
+					$patron=$this->patron->order_by('time_in')->find_by(array(
+						'phone'=>$from_phone,
+						'removed'=>0,
+					));
+
+					if(empty($patron))
+						throw new Exception('Unable to find patron');
+
+					// Data we will update the patron record with
+					$data=array();
+
+					$responses_config=$this->config->item('response_keywords');
+
+					// Check for "ok on our way"
+					foreach($responses_config['okay'] as $keyword)
+					{
+						if(strpos($body,$keyword)!==FALSE)
+						{
+							// Found the keyword in the text
+							return $this->patron->update($patron['id'],array(
+								'response'=>'ok on our way',
+							));
+						}
+					}
+
+					// Check for "stay at bar"
+					foreach($responses_config['stay_at_bar'] as $keyword)
+					{
+						if(strpos($body,$keyword)!==FALSE)
+						{
+							// Found the keyword in the text
+							return $this->patron->update($patron['id'],array(
+								'response'=>'stay at bar',
+							));
+						}
+					}
+
+					// Check for "cancel table"
+					foreach($responses_config['cancel'] as $keyword)
+					{
+						if(strpos($body,$keyword)!==FALSE)
+						{
+							// Found the keyword in the text
+							return $this->patron->update($patron['id'],array(
+								'response'=>'cancel table',
+							));
+						}
+					}
+
+					throw new Exception('Unable to determine request');
+				}
+				else
+				{
+					throw new Exception('Incorrect Twilio data posted');
+				}
+			}
+		}
+		catch (Exception $e)
+		{
+			// Dump the POST data
+			ob_start();
+			var_dump($_POST);
+			$data=ob_get_clean();
+
+			// Log it for later
+			$sql='insert into sms_exception (error, data) values ('.$this->db->escape($e->getMessage()).','.$this->db->escape($data).')';
+			$this->db->query($sql);
+		}
 	}
 }
 
