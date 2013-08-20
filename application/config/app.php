@@ -20,14 +20,29 @@ $config['dev_mode']=TRUE;
 |
 |--------------------------------------------------------------------------
 */
-$config['database']=array(
-	'hostname'=>'localhost',
-	'username'=>'root',
-	'password'=>'root',
-	'database'=>'tablequick',
-	'dbdriver'=>'mysql',
-	'db_debug'=>$config['dev_mode'],
-);
+if($config['dev_mode']==TRUE)
+{
+	$config['database']=array(
+		'hostname'=>'localhost',
+		'username'=>'root',
+		'password'=>'root',
+		'database'=>'tablequick',
+		'dbdriver'=>'mysql',
+		'db_debug'=>$config['dev_mode'],
+	);
+}
+else
+{
+	$config['database']=array(
+		'hostname'=>'localhost',
+		'username'=>'thomas',
+		'password'=>'Dsb6Zf3npPi8',
+		'database'=>'thomas_tablequick',
+		'dbdriver'=>'mysql',
+		'db_debug'=>$config['dev_mode'],
+	);
+}
+
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +83,14 @@ $config['copyright_format']='Copyright &copy; %1$s %2$d. All Rights Reserved.';
 | 'module_path'			Base module directory path
 |
 */
-$config['base_url']='http://tablequick.com';
+if($config['dev_mode']===TRUE)
+{
+	$config['base_url']='http://tablequick.com';
+}
+else
+{
+	$config['base_url']='http://tablequick.lifthousedesign.com';
+}
 $config['assets_url']='/assets';
 $config['module_path']=APPPATH.'modules';
 
@@ -124,7 +146,7 @@ $config['sms_notifications']=array(
 		'account_sid'=>'AC295178e1f333781132528cd16d55e49b',
 		'auth_token'=>'81905b30336cc2fb674adf13e3f17fb2',
 		'api_version'=>'2010-04-01',
-		'number'=>'+15128618405',
+		'number'=>'+15129422374',
 	),
 );
 
