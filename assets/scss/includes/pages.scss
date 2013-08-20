@@ -21,3 +21,146 @@
 	padding: 10px;
 	@include clearfix;
 }
+
+.dataTables_options .button {
+	margin-top: 3px;
+	margin-left: 10px;
+}
+
+#customer-table {
+	tr {
+		td, th {
+			&.datetime {
+				width: 150px;
+				text-align: center;
+			}
+			&.patron-name {
+				text-align: left;
+			}
+			&.status {
+				width: 100px;
+				text-align: center;
+			}
+			&.response {
+				width: 120px;
+				text-align: center;
+			}
+			&.table {
+				width: 60px;
+				text-align: center;
+			}
+			&.actions {
+				text-align: center;
+				width: 280px;
+
+				.button {
+					margin: 0 3px;
+				}
+			}
+		}
+
+		&.status-waiting {
+			td, th {
+				&.actions .button {
+					&.seat-ready {
+						display: inline-block;
+					}
+
+					&.seat-now {
+						display: none;
+					}
+
+					&.cancel {
+						display: inline-block;
+					}
+
+					&.new-request {
+						display: none;
+					}
+
+					&.remove {
+						display: none;
+					}
+				}
+			}
+		}
+
+		&.status-cancelled {
+			td, th {
+				&.actions .button {
+					&.seat-ready {
+						display: none;
+					}
+
+					&.seat-now {
+						display: none;
+					}
+
+					&.cancel {
+						display: none;
+					}
+
+					&.new-request {
+						display: inline-block;
+					}
+
+					&.remove {
+						display: inline-block;
+					}
+				}
+			}
+		}
+
+		&.status-notified {
+			td, th {
+				&.actions .button {
+					&.seat-ready {
+						display: inline-block;
+					}
+
+					&.seat-now {
+						display: inline-block;
+					}
+
+					&.cancel {
+						display: inline-block;
+					}
+
+					&.new-request {
+						display: none;
+					}
+
+					&.remove {
+						display: none;
+					}
+				}
+			}
+		}
+
+		&.status-seated {
+			td, th {
+				&.actions .button {
+					&.seat-ready {
+						display: none;
+					}
+
+					&.seat-now {
+						display: none;
+					}
+
+					&.cancel {
+						display: none;
+					}
+
+					&.new-request {
+						display: none;
+					}
+
+					&.remove {
+						display: inline-block;
+					}
+				}
+			}
+		}
+	}
+}

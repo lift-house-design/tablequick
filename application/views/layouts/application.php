@@ -29,14 +29,18 @@
 				'name'=>'email',
 				'id'=>'email',
 				'placeholder'=>'E-mail',
-				'valie'=>set_value('value'),
+				'value'=>set_value('value'),
+				'class'=>'small',
 			)) ?>
 			<?php echo form_password(array(
 				'name'=>'password',
 				'id'=>'password',
 				'placeholder'=>'Password',
+				'class'=>'small',
 			)) ?>
 			<?php echo form_submit('login', 'Log In') ?>
+			<?php echo anchor('sign-up','Sign Up') ?> |
+			<?php echo anchor('forgot-password','Forgot Password?') ?>
 		<?php echo form_close() ?>
 	<?php endif; ?>
 	</div>
@@ -46,6 +50,18 @@
 		<?php echo anchor(($logged_in && $this->uri->rsegment(1)!='dashboard' ? 'dashboard' : '/'),'TableQuick') ?>
 	</header>
 	<div id="contents">
+		<?php if(!empty($notifications)): ?>
+			<div class="notifications">
+				<ul>
+					<li><?php echo implode('</li><li>',$notifications) ?></li>
+				</ul>
+			</div>
+		<?php endif; ?>
+		<?php if(!empty($errors)): ?>
+			<div class="errors">
+				<ul><?php echo $errors ?></ul>
+			</div>
+		<?php endif; ?>
 		<?php echo $yield ?>
 	</div>
 </div>

@@ -41,16 +41,21 @@
 $route['default_controller'] = "site";
 $route['404_override'] = '';
 
-$route['authentication-error']='site/authentication_error';
+// Frontend
 
-$route['administration/log_in']='administration/log_in';
-$route['administration/log_out']='administration/log_out';
-
-$route['administration/(.+)']='administration/module/$1';
-
+// Frontend - Accounts
 $route['log-in']='site/log_in';
 $route['log-out']='site/log_out';
 $route['sign-up']='site/sign_up';
+$route['confirm-account/(.+)/(.+)']='site/confirm_account/$1/$2';
+$route['reset-password/(.+)/(.+)']='site/reset_password/$1/$2';
+$route['forgot-password']='site/forgot_password';
+$route['authentication-error']='site/authentication_error';
+
+// Administration
+$route['administration/log_in']='administration/log_in';
+$route['administration/log_out']='administration/log_out';
+$route['administration/(.+)']='administration/module/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

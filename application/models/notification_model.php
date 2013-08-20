@@ -35,12 +35,11 @@
 			{
 				$email_successful=TRUE;
 				$sms_successful=TRUE;
-
+				
 				if($notification['email_enabled'] && $email)
 				{
 					$email_successful=send_email($notification['email_subject'],$notification['email_message'],$data,$email);
 				}
-
 				if($notification['sms_enabled'] && $phone)
 				{
 					$sms_successful=send_sms($notification['sms_message'],$data,$phone);

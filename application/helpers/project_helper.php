@@ -125,6 +125,10 @@ if(!function_exists('send_email'))
 		$email->from($config['sender_email'],$config['sender_name']);
 		$email->to($to);
 		$email->subject($subject);
+
+		if($config['config']['mailtype']=='html')
+			$message=nl2br($message);
+		
 		$email->message($message);
 
 		return $email->send();

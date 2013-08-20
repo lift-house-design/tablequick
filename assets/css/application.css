@@ -157,6 +157,87 @@ h5,
 h6 {
   font-size: 20px; }
 
+h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  color: #0072c6;
+  border-bottom: 1px solid #cccccc;
+  padding-bottom: 5px;
+  padding-left: 5px; }
+
+a,
+a:visited {
+  text-decoration: none;
+  color: #0072c6; }
+
+/*
+|--------------------------------------------------------------------------
+| Base - Forms
+|--------------------------------------------------------------------------
+*/
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 0; }
+
+input,
+textarea,
+select {
+  border: 1px solid #cccccc;
+  padding: 5px;
+  background-color: #f2f2f2;
+  -webkit-border-radius: 4px;
+  /* Safari 3-4, iOS 1-3.2, Android 1.6- */
+  -moz-border-radius: 4px;
+  /* Firefox 1-3.6 */
+  border-radius: 4px;
+  /* Opera 10.5, IE 9, Safari 5, Chrome, Firefox 4, iOS 4, Android 2.1+ */
+  /* Prevent background color leak outs */
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  width: 300px; }
+  input:focus,
+  textarea:focus,
+  select:focus {
+    background-color: whitesmoke;
+    border-color: #0072c6; }
+  input.small,
+  textarea.small,
+  select.small {
+    width: 200px; }
+  input.large,
+  textarea.large,
+  select.large {
+    width: 400px; }
+  input.x-large,
+  textarea.x-large,
+  select.x-large {
+    width: 500px; }
+  input[type="submit"], input[type="button"],
+  textarea[type="submit"],
+  textarea[type="button"],
+  select[type="submit"],
+  select[type="button"] {
+    width: auto;
+    border: 0;
+    color: white;
+    padding: 5px 10px;
+    font-weight: 300; }
+
+textarea {
+  height: 100px; }
+  textarea.small {
+    height: 50px; }
+  textarea.large {
+    height: 150px; }
+  textarea.x-large {
+    height: 200px; }
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto; }
+
 /*
 |--------------------------------------------------------------------------
 | Modules
@@ -191,10 +272,26 @@ h6 {
     background-color: #737373; }
   .button:visited {
     color: white; }
-  .button.primary {
+  .button.blue, .button.primary, input[type="submit"], input[type="button"],
+  textarea[type="submit"],
+  textarea[type="button"],
+  select[type="submit"],
+  select[type="button"] {
     background-color: #0072c6; }
-    .button.primary:hover {
+    .button.blue:hover, .button.primary:hover, input[type="submit"]:hover, input[type="button"]:hover,
+    textarea[type="submit"]:hover,
+    textarea[type="button"]:hover,
+    select[type="submit"]:hover,
+    select[type="button"]:hover {
       background-color: #0081e0; }
+  .button.green {
+    background-color: #22753e; }
+    .button.green:hover {
+      background-color: #288948; }
+  .button.red {
+    background-color: #841818; }
+    .button.red:hover {
+      background-color: #9a1c1c; }
 
 /*
 |--------------------------------------------------------------------------
@@ -353,6 +450,9 @@ h6 {
     font-weight: 300; }
   .field .element {
     display: inline-block; }
+    .field .element.readonly span {
+      position: relative;
+      top: 2px; }
   .field.checkbox label, .field.radio label {
     cursor: pointer;
     text-transform: none; }
@@ -401,6 +501,18 @@ h6 {
   background-color: #f2f2f2;
   font-size: 12px;
   padding: 7px 14px; }
+  #account input[type="text"],
+  #account input[type="password"] {
+    background-color: white; }
+  #account a {
+    text-decoration: none;
+    font-size: 11px;
+    color: #666666; }
+    #account a:hover {
+      color: #0072c6; }
+  #account input,
+  #account a {
+    margin: 0 5px; }
 
 header {
   text-align: center;
@@ -408,6 +520,9 @@ header {
   font-size: 28px;
   padding: 20px;
   border-bottom: 1px solid #f2f2f2; }
+
+#contents {
+  padding-bottom: 30px; }
 
 /*
 |--------------------------------------------------------------------------
@@ -433,3 +548,67 @@ header {
     display: table; }
   #dashboard-controls:after {
     clear: both; }
+
+.dataTables_options .button {
+  margin-top: 3px;
+  margin-left: 10px; }
+
+#customer-table tr td.datetime, #customer-table tr th.datetime {
+  width: 150px;
+  text-align: center; }
+#customer-table tr td.patron-name, #customer-table tr th.patron-name {
+  text-align: left; }
+#customer-table tr td.status, #customer-table tr th.status {
+  width: 100px;
+  text-align: center; }
+#customer-table tr td.response, #customer-table tr th.response {
+  width: 120px;
+  text-align: center; }
+#customer-table tr td.table, #customer-table tr th.table {
+  width: 60px;
+  text-align: center; }
+#customer-table tr td.actions, #customer-table tr th.actions {
+  text-align: center;
+  width: 280px; }
+  #customer-table tr td.actions .button, #customer-table tr th.actions .button {
+    margin: 0 3px; }
+#customer-table tr.status-waiting td.actions .button.seat-ready, #customer-table tr.status-waiting th.actions .button.seat-ready {
+  display: inline-block; }
+#customer-table tr.status-waiting td.actions .button.seat-now, #customer-table tr.status-waiting th.actions .button.seat-now {
+  display: none; }
+#customer-table tr.status-waiting td.actions .button.cancel, #customer-table tr.status-waiting th.actions .button.cancel {
+  display: inline-block; }
+#customer-table tr.status-waiting td.actions .button.new-request, #customer-table tr.status-waiting th.actions .button.new-request {
+  display: none; }
+#customer-table tr.status-waiting td.actions .button.remove, #customer-table tr.status-waiting th.actions .button.remove {
+  display: none; }
+#customer-table tr.status-cancelled td.actions .button.seat-ready, #customer-table tr.status-cancelled th.actions .button.seat-ready {
+  display: none; }
+#customer-table tr.status-cancelled td.actions .button.seat-now, #customer-table tr.status-cancelled th.actions .button.seat-now {
+  display: none; }
+#customer-table tr.status-cancelled td.actions .button.cancel, #customer-table tr.status-cancelled th.actions .button.cancel {
+  display: none; }
+#customer-table tr.status-cancelled td.actions .button.new-request, #customer-table tr.status-cancelled th.actions .button.new-request {
+  display: inline-block; }
+#customer-table tr.status-cancelled td.actions .button.remove, #customer-table tr.status-cancelled th.actions .button.remove {
+  display: inline-block; }
+#customer-table tr.status-notified td.actions .button.seat-ready, #customer-table tr.status-notified th.actions .button.seat-ready {
+  display: inline-block; }
+#customer-table tr.status-notified td.actions .button.seat-now, #customer-table tr.status-notified th.actions .button.seat-now {
+  display: inline-block; }
+#customer-table tr.status-notified td.actions .button.cancel, #customer-table tr.status-notified th.actions .button.cancel {
+  display: inline-block; }
+#customer-table tr.status-notified td.actions .button.new-request, #customer-table tr.status-notified th.actions .button.new-request {
+  display: none; }
+#customer-table tr.status-notified td.actions .button.remove, #customer-table tr.status-notified th.actions .button.remove {
+  display: none; }
+#customer-table tr.status-seated td.actions .button.seat-ready, #customer-table tr.status-seated th.actions .button.seat-ready {
+  display: none; }
+#customer-table tr.status-seated td.actions .button.seat-now, #customer-table tr.status-seated th.actions .button.seat-now {
+  display: none; }
+#customer-table tr.status-seated td.actions .button.cancel, #customer-table tr.status-seated th.actions .button.cancel {
+  display: none; }
+#customer-table tr.status-seated td.actions .button.new-request, #customer-table tr.status-seated th.actions .button.new-request {
+  display: none; }
+#customer-table tr.status-seated td.actions .button.remove, #customer-table tr.status-seated th.actions .button.remove {
+  display: inline-block; }

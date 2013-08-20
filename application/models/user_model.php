@@ -91,6 +91,11 @@
 					$this->form_validation->set_error('The e-mail address or password you entered was incorrect. Please try again.');
 					return FALSE;
 				}
+				elseif($user['confirm_code']!==NULL)
+				{
+					$this->form_validation->set_error('You must confirm your e-mail address by clicking the confirmation link that was e-mailed to you.');
+					return FALSE;
+				}
 				
 				$this->session->set_userdata('user',$user);
 
@@ -109,6 +114,11 @@
 			$this->session->unset_userdata('user');
 
 			return TRUE;
+		}
+
+		public function register()
+		{
+			
 		}
 
 		public function has_role($role)
@@ -161,6 +171,28 @@
 			return array(
 				'administrator'=>'User may log in to the back-end of the website and make changes to the front-end.',
 			);
+		}
+
+		public function generate_confirm_code()
+		{
+			$chars=array_merge(
+				range('a','z'),
+				range('A','Z'),
+				range(0,9)
+			);
+			$confirm_code='';
+
+			foreach(array_rand($chars,8) as $i)
+			{
+				$confirm_code.=$chars[$i];
+			}
+
+			return $confirm_code;
+		}
+
+		public function send_registration_notification()
+		{
+			
 		}
 	}
 	

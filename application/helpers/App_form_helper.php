@@ -9,9 +9,12 @@ if(!function_exists('form_field'))
 		if($type=='text')
 			$type='input';
 
-		$params['id']=$name;
-		$params['name']=$name;
-
+		if(is_array($params))
+		{
+			$params['id']=$name;
+			$params['name']=$name;	
+		}
+		
 		return $CI->load->view('asides/field',array(
 			'label'=>$label,
 			'name'=>$name,

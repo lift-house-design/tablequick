@@ -29,12 +29,32 @@
 		color: $color_white;
 	}
 
-	&.primary {
+	&.blue {
 		background-color: $color_blue;
 
 		&:hover {
 			background-color: lighten($color_blue,5%);
 		}
+	}
+
+	&.green {
+		background-color: $color_green;
+
+		&:hover {
+			background-color: lighten($color_green,5%);
+		}
+	}
+
+	&.red {
+		background-color: $color_darkred;
+
+		&:hover {
+			background-color: lighten($color_darkred,5%);
+		}
+	}
+
+	&.primary {
+		@extend .button.blue;
 	}
 }
 
@@ -226,6 +246,13 @@
 
 	.element {
 		display: inline-block;
+
+		&.readonly {
+			span {
+				position: relative;
+				top: 2px;
+			}
+		}
 	}
 
 	&.checkbox,

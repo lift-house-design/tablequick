@@ -55,7 +55,7 @@ class Users_admin_module extends Admin_module
 		{
 			$data=$this->input->post();
 
-			if($this->user->insert($this->input->post()))
+			if($this->user->insert($data))
 			{
 				if(empty($data['roles']))
 					$data['roles']=array();
