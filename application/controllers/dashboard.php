@@ -209,7 +209,7 @@ class Dashboard extends App_Controller
 				{
 $this->_log(__LINE__); ////////////
 					$from_phone=$data['From'];
-					$message=$data['Body'];
+					$message=trim(strtolower($data['Body']));
 
 					// Parse out the 10-digit phone number
 					$regexp='/(\+1)?(\d{10})/';
@@ -224,7 +224,8 @@ $this->_log(__LINE__); ////////////
 $this->_log(__LINE__); ////////////
 					if($from_phone===FALSE)
 						throw new Exception('From phone number unable to be formatted');
-
+$this->_log(__LINE__); ////////////
+$this->_log($from_phone); ////////////
 					$patron=$this->patron->order_by('time_in')->find_by(array(
 						'phone'=>$from_phone,
 						'removed'=>0,
