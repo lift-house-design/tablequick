@@ -198,6 +198,9 @@ class Dashboard extends App_Controller
 
 	public function process_sms()
 	{
+		$this->layout=FALSE;
+		$this->view=FALSE;
+		
 		try
 		{
 			if($data=$this->input->post())
