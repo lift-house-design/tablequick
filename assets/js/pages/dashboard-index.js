@@ -345,6 +345,14 @@ $(function(){
 			});
 
 			return e.preventDefault();
+		})
+		.on('click','.seat-next-customer.button',function(e){
+			$.fancybox.open({
+				type: 'ajax',
+				href: '/dashboard/seat_next_customer'
+			});
+
+			return e.preventDefault();
 		});
 
 	// Load initial data

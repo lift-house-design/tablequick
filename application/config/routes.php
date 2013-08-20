@@ -42,6 +42,7 @@ $route['default_controller'] = "site";
 $route['404_override'] = '';
 
 // Frontend
+$route['process-sms']='dashboard/process_sms';
 
 // Frontend - Accounts
 $route['log-in']='site/log_in';

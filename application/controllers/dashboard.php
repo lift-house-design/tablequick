@@ -178,6 +178,33 @@ class Dashboard extends App_Controller
 			$this->data['patron']=$this->patron->get($id);	
 		}
 	}
+
+	public function seat_next_customer()
+	{
+		$patron=$this->patron
+			->order_by('time_in')
+			->get_by(array(
+				'user_id'=>$this->user->data['id'],
+				'status'=>'Waiting',
+				'removed'=>0,
+			));
+
+		if(!empty($patron))	
+		{
+			$this->view='dashboard/seat_ready';
+			$this->seat_ready($patron['id']);
+		}
+	}
+
+	public function process_sms()
+	{
+		ob_start();
+		var_dump($_POST);
+		$data=ob_get_clean();
+
+		$sql='insert into logger (data) values ('.$this->db->escape($data).')';
+		$this->db->query($sql);
+	}
 }
 
 /* End of file dashboard.php */
