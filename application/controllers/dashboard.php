@@ -207,38 +207,37 @@ class Dashboard extends App_Controller
 			{
 				if(isset($data['From']) && isset($data['Body']))
 				{
-$this->_log(__LINE__); ////////////
 					$from_phone=$data['From'];
 					$message=trim(strtolower($data['Body']));
 
 					// Parse out the 10-digit phone number
 					$regexp='/(\+1)?(\d{10})/';
 					preg_match($regexp,$from_phone,$matches);
-$this->_log(__LINE__); ////////////
+
 					if(count($matches)!=3)
 						throw new Exception('From phone number in an unexpected format');
 					// Should now have a phone number like 5551114444
 					$from_phone=$matches[2];
 					// Should now have a phone number like (555) 111-4444
 					$from_phone=parse_phone($from_phone);
-$this->_log(__LINE__); ////////////
+
 					if($from_phone===FALSE)
 						throw new Exception('From phone number unable to be formatted');
-$this->_log(__LINE__); ////////////
-$this->_log($from_phone); ////////////
-					$patron=$this->patron->order_by('time_in')->find_by(array(
-						'phone'=>$from_phone,
-						'removed'=>0,
-					));
-$this->_log(__LINE__); ////////////
+
+					$patron=$this->patron
+						->order_by('time_in')
+						->get_by(array(
+							'phone'=>$from_phone,
+							'removed'=>0,
+						));
+
 					if(empty($patron))
 						throw new Exception('Unable to find patron');
 
 					// Data we will update the patron record with
 					$data=array();
-$this->_log(__LINE__); ////////////
 					$responses_config=$this->config->item('response_keywords');
-$this->_log(__LINE__); ////////////
+
 					// Check for "ok on our way"
 					foreach($responses_config['okay'] as $keyword)
 					{
@@ -250,7 +249,7 @@ $this->_log(__LINE__); ////////////
 							));
 						}
 					}
-$this->_log(__LINE__); ////////////
+
 					// Check for "stay at bar"
 					foreach($responses_config['stay_at_bar'] as $keyword)
 					{
@@ -262,7 +261,7 @@ $this->_log(__LINE__); ////////////
 							));
 						}
 					}
-$this->_log(__LINE__); ////////////
+
 					// Check for "cancel table"
 					foreach($responses_config['cancel'] as $keyword)
 					{
@@ -274,7 +273,7 @@ $this->_log(__LINE__); ////////////
 							));
 						}
 					}
-$this->_log(__LINE__); ////////////
+
 					throw new Exception('Unable to determine request');
 				}
 				else
@@ -282,7 +281,6 @@ $this->_log(__LINE__); ////////////
 					throw new Exception('Incorrect Twilio data posted');
 				}
 			}
-$this->_log(__LINE__); ////////////
 		}
 		catch (Exception $e)
 		{
