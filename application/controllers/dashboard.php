@@ -241,7 +241,7 @@ class Dashboard extends App_Controller
 					// Check for "ok on our way"
 					foreach($responses_config['okay'] as $keyword)
 					{
-						if(strpos($body,$keyword)!==FALSE)
+						if(strpos($message,$keyword)!==FALSE)
 						{
 							// Found the keyword in the text
 							return $this->patron->update($patron['id'],array(
@@ -253,7 +253,7 @@ class Dashboard extends App_Controller
 					// Check for "stay at bar"
 					foreach($responses_config['stay_at_bar'] as $keyword)
 					{
-						if(strpos($body,$keyword)!==FALSE)
+						if(strpos($message,$keyword)!==FALSE)
 						{
 							// Found the keyword in the text
 							return $this->patron->update($patron['id'],array(
@@ -265,7 +265,7 @@ class Dashboard extends App_Controller
 					// Check for "cancel table"
 					foreach($responses_config['cancel'] as $keyword)
 					{
-						if(strpos($body,$keyword)!==FALSE)
+						if(strpos($message,$keyword)!==FALSE)
 						{
 							// Found the keyword in the text
 							return $this->patron->update($patron['id'],array(
