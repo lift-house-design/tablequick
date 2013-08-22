@@ -74,7 +74,7 @@ CREATE  TABLE IF NOT EXISTS `patron` (
   `name` VARCHAR(64) NOT NULL ,
   `phone` VARCHAR(14) NOT NULL ,
   `table_number` VARCHAR(10) NULL ,
-  `status` ENUM('Waiting','Notified','Seated','Cancelled/Left','Cancelled/At Bar') NOT NULL ,
+  `status` ENUM('Waiting','Notified','Notified/Replied','Seated','Cancelled/Left','Cancelled/At Bar') NOT NULL ,
   `response` ENUM('ok on our way','stay at bar','cancel table') NULL ,
   `time_in` DATETIME NOT NULL ,
   `time_seated` DATETIME NULL ,

@@ -638,6 +638,16 @@ header {
   display: none; }
 #customer-table tr.status-notified td.actions .button.remove, #customer-table tr.status-notified th.actions .button.remove {
   display: none; }
+#customer-table tr.status-replied td.actions .button.seat-ready, #customer-table tr.status-replied th.actions .button.seat-ready {
+  display: none; }
+#customer-table tr.status-replied td.actions .button.seat-now, #customer-table tr.status-replied th.actions .button.seat-now {
+  display: inline-block; }
+#customer-table tr.status-replied td.actions .button.cancel, #customer-table tr.status-replied th.actions .button.cancel {
+  display: inline-block; }
+#customer-table tr.status-replied td.actions .button.new-request, #customer-table tr.status-replied th.actions .button.new-request {
+  display: none; }
+#customer-table tr.status-replied td.actions .button.remove, #customer-table tr.status-replied th.actions .button.remove {
+  display: none; }
 #customer-table tr.status-seated td.actions .button.seat-ready, #customer-table tr.status-seated th.actions .button.seat-ready {
   display: none; }
 #customer-table tr.status-seated td.actions .button.seat-now, #customer-table tr.status-seated th.actions .button.seat-now {

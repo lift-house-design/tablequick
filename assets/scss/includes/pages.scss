@@ -145,6 +145,32 @@
 			}
 		}
 
+		&.status-replied {
+			td, th {
+				&.actions .button {
+					&.seat-ready {
+						display: none;
+					}
+
+					&.seat-now {
+						display: inline-block;
+					}
+
+					&.cancel {
+						display: inline-block;
+					}
+
+					&.new-request {
+						display: none;
+					}
+
+					&.remove {
+						display: none;
+					}
+				}
+			}
+		}
+
 		&.status-seated {
 			td, th {
 				&.actions .button {
