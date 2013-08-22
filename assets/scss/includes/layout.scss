@@ -29,6 +29,13 @@
 	a {
 		margin: 0 5px;
 	}
+
+	.buttons {
+		display: inline;
+		border-top: 0;
+		margin-top: 0;
+		padding: 0;
+	}
 }
 
 header {
@@ -41,4 +48,42 @@ header {
 
 #contents {
 	padding-bottom: 30px;
+}
+
+@media only screen and (max-width: 820px) {
+     /* These styles take effect once the screen is 820px or smaller */
+     /*#account input[type="text"],
+     #account input[type="password"] {
+     	width: 150px;
+     }*/
+     #account {
+     	.wrapper {
+     		width: auto;
+     		margin: 0;
+     	}
+
+     	input[type="text"],
+     	input[type="password"] {
+     		width: 150px;
+     	}
+     }
+}
+
+@media only screen and (max-width: 630px) {
+	#account {
+	    input[type="text"],
+     	input[type="password"] {
+     		width: 80%;
+     		margin: 0 auto 7px auto;
+     		display: block;
+     	}
+
+     	.buttons {
+     		display: block;
+			padding-top: 7px;
+			border-top: 1px solid darken($color_white,15%);
+			margin-top: 8px;
+			text-align: center;
+     	}
+     }
 }

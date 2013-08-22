@@ -89,6 +89,9 @@ class Site extends App_Controller
 				$this->set_notification('You have been sent an e-mail with a link that will verify your e-mail address and activate your account. Thank you for registering!');
 			}
 		}
+
+		$this->js[]='jquery.maskedinput.min.js';
+		$this->js[]='pages/site-sign-up.js';
 	}
 
 	public function confirm_account($id,$confirm_code)

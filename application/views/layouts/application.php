@@ -38,9 +38,11 @@
 				'placeholder'=>'Password',
 				'class'=>'small',
 			)) ?>
-			<?php echo form_submit('login', 'Log In') ?>
-			<?php echo anchor('sign-up','Sign Up') ?> |
-			<?php echo anchor('forgot-password','Forgot Password?') ?>
+			<div class="buttons">
+				<?php echo form_submit('login', 'Log In') ?>
+				<?php echo anchor('sign-up','Sign Up') ?> |
+				<?php echo anchor('forgot-password','Forgot Password?') ?>
+			</div>
 		<?php echo form_close() ?>
 	<?php endif; ?>
 	</div>
