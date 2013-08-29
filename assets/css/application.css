@@ -514,6 +514,11 @@ input[type="radio"] {
   #account input,
   #account a {
     margin: 0 5px; }
+  #account .buttons {
+    display: inline;
+    border-top: 0;
+    margin-top: 0;
+    padding: 0; }
 
 header {
   text-align: center;
@@ -525,6 +530,30 @@ header {
 #contents {
   padding-bottom: 30px; }
 
+@media only screen and (max-width: 820px) {
+  /* These styles take effect once the screen is 820px or smaller */
+  /*#account input[type="text"],
+  #account input[type="password"] {
+  	width: 150px;
+  }*/
+  #account .wrapper {
+    width: auto;
+    margin: 0; }
+  #account input[type="text"],
+  #account input[type="password"] {
+    width: 150px; } }
+@media only screen and (max-width: 630px) {
+  #account input[type="text"],
+  #account input[type="password"] {
+    width: 80%;
+    margin: 0 auto 7px auto;
+    display: block; }
+  #account .buttons {
+    display: block;
+    padding-top: 7px;
+    border-top: 1px solid #d9d9d9;
+    margin-top: 8px;
+    text-align: center; } }
 /*
 |--------------------------------------------------------------------------
 | Pages
@@ -577,7 +606,7 @@ header {
   text-align: center; }
 #customer-table tr td.actions, #customer-table tr th.actions {
   text-align: center;
-  width: 280px; }
+  width: 300px; }
   #customer-table tr td.actions .button, #customer-table tr th.actions .button {
     margin: 0 3px; }
 #customer-table tr.status-waiting td.actions .button.seat-ready, #customer-table tr.status-waiting th.actions .button.seat-ready {
@@ -609,6 +638,16 @@ header {
 #customer-table tr.status-notified td.actions .button.new-request, #customer-table tr.status-notified th.actions .button.new-request {
   display: none; }
 #customer-table tr.status-notified td.actions .button.remove, #customer-table tr.status-notified th.actions .button.remove {
+  display: none; }
+#customer-table tr.status-replied td.actions .button.seat-ready, #customer-table tr.status-replied th.actions .button.seat-ready {
+  display: none; }
+#customer-table tr.status-replied td.actions .button.seat-now, #customer-table tr.status-replied th.actions .button.seat-now {
+  display: inline-block; }
+#customer-table tr.status-replied td.actions .button.cancel, #customer-table tr.status-replied th.actions .button.cancel {
+  display: inline-block; }
+#customer-table tr.status-replied td.actions .button.new-request, #customer-table tr.status-replied th.actions .button.new-request {
+  display: none; }
+#customer-table tr.status-replied td.actions .button.remove, #customer-table tr.status-replied th.actions .button.remove {
   display: none; }
 #customer-table tr.status-seated td.actions .button.seat-ready, #customer-table tr.status-seated th.actions .button.seat-ready {
   display: none; }

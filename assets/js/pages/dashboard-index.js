@@ -93,6 +93,9 @@ $(function(){
 				case 'Notified':
 					$(row).addClass('status-notified');
 					break;
+				case 'Notified/Replied':
+					$(row).addClass('status-replied');
+					break;
 				case 'Seated':
 					$(row).addClass('status-seated');
 					break;

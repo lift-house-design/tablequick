@@ -216,6 +216,11 @@ class Dashboard extends App_Controller
 			{
 				if(isset($data['From']) && isset($data['Body']))
 				{
+					/*
+					|--------------------------------------------------------------------------
+					| Find the patron that sent the text
+					|--------------------------------------------------------------------------
+					*/
 					$from_phone=$data['From'];
 					$message=trim(strtolower($data['Body']));
 
@@ -225,64 +230,43 @@ class Dashboard extends App_Controller
 
 					if(count($matches)!=3)
 						throw new Exception('From phone number in an unexpected format');
-					// Should now have a phone number like 5551114444
-					$from_phone=$matches[2];
-					// Should now have a phone number like (555) 111-4444
-					$from_phone=parse_phone($from_phone);
+
+					$from_phone=$matches[2]; // Should now have a phone number like 5551114444
+					$from_phone=parse_phone($from_phone); // Should now have a phone number like (555) 111-4444
 
 					if($from_phone===FALSE)
 						throw new Exception('From phone number unable to be formatted');
 
 					$patron=$this->patron
-						->order_by('time_in')
+						->order_by('time_in','desc') // We want the latest entry of this patron (otherwise we may update an old entry)
 						->get_by(array(
 							'phone'=>$from_phone,
 							'removed'=>0,
+							'status'=>'Notified', // Make sure this patron has been notified and has not responded yet
 						));
 
 					if(empty($patron))
 						throw new Exception('Unable to find patron');
+					
+					$response_keywords=$this->config->item('response_keywords');
 
-					// Data we will update the patron record with
-					$data=array();
-					$responses_config=$this->config->item('response_keywords');
-
-					// Check for "ok on our way"
-					foreach($responses_config['okay'] as $keyword)
+					foreach($response_keywords as $response=>$keywords)
 					{
-						if(strpos($message,$keyword)!==FALSE)
+						// Check for this response's keywords
+						foreach($keywords as $keyword)
 						{
-							// Found the keyword in the text
-							return $this->patron->update($patron['id'],array(
-								'response'=>'ok on our way',
-							));
+							if(strpos($message,$keyword)!==FALSE)
+							{
+								// Found the keyword
+								return $this->patron->update($patron['id'],array(
+									'response'=>$response,
+									'status'=>'Notified/Replied',
+								));
+							}
 						}
 					}
 
-					// Check for "stay at bar"
-					foreach($responses_config['stay_at_bar'] as $keyword)
-					{
-						if(strpos($message,$keyword)!==FALSE)
-						{
-							// Found the keyword in the text
-							return $this->patron->update($patron['id'],array(
-								'response'=>'stay at bar',
-							));
-						}
-					}
-
-					// Check for "cancel table"
-					foreach($responses_config['cancel'] as $keyword)
-					{
-						if(strpos($message,$keyword)!==FALSE)
-						{
-							// Found the keyword in the text
-							return $this->patron->update($patron['id'],array(
-								'response'=>'cancel table',
-							));
-						}
-					}
-
+					// At this point, no keywords were found
 					throw new Exception('Unable to determine request');
 				}
 				else

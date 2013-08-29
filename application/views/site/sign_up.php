@@ -23,6 +23,7 @@
 	<?php echo form_field('Phone','phone','phone',array(
 		'value'=>set_value('phone'),
 		'required'=>TRUE,
+		'class'=>'phone',
 	)) ?>
 	<div class="buttons">
 		<?php echo form_submit('sign_up', 'Sign Up') ?>

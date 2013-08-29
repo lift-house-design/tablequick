@@ -2,17 +2,6 @@
 
 /*
 |--------------------------------------------------------------------------
-| Development Mode
-|--------------------------------------------------------------------------
-|
-| Set to true to display errors and debugging information.
-|
-|--------------------------------------------------------------------------
-*/
-$config['dev_mode']=TRUE;
-
-/*
-|--------------------------------------------------------------------------
 | Database Configuration
 |--------------------------------------------------------------------------
 |
@@ -20,29 +9,30 @@ $config['dev_mode']=TRUE;
 |
 |--------------------------------------------------------------------------
 */
-if($config['dev_mode']==TRUE)
-{
-	$config['database']=array(
-		'hostname'=>'localhost',
+$config['database_environments']=array(
+	'local'=>array(
 		'username'=>'root',
-		'password'=>'root',
-		'database'=>'tablequick',
-		'dbdriver'=>'mysql',
-		'db_debug'=>$config['dev_mode'],
-	);
-}
-else
-{
-	$config['database']=array(
-		'hostname'=>'localhost',
+		'password'=>'',
+	),
+	'development'=>array(
 		'username'=>'thomas',
 		'password'=>'Dsb6Zf3npPi8',
 		'database'=>'thomas_tablequick',
-		'dbdriver'=>'mysql',
-		'db_debug'=>$config['dev_mode'],
-	);
-}
+	),
+	'production'=>array( // TBD
+		'username'=>'',
+		'password'=>'',
+	),
+);
+$config['database']=array(
+	'hostname'=>'localhost',
+	'database'=>'tablequick',
+	'dbdriver'=>'mysql',
+	'db_debug'=>ENVIRONMENT!=='production',
+);
 
+// Overwrite default database settings with environment-specific settings
+$config['database']=array_merge($config['database'],$config['database_environments'][ENVIRONMENT]);
 
 /*
 |--------------------------------------------------------------------------
@@ -83,14 +73,12 @@ $config['copyright_format']='Copyright &copy; %1$s %2$d. All Rights Reserved.';
 | 'module_path'			Base module directory path
 |
 */
-if($config['dev_mode']===TRUE)
-{
-	$config['base_url']='http://tablequick.com';
-}
-else
-{
-	$config['base_url']='http://tablequick.lifthousedesign.com';
-}
+$config['base_url_environment']=array(
+	'local'=>'http://tablequick.com',
+	'development'=>'http://tablequick.lifthousedesign.com',
+	'production'=>'http://tablequick.com',
+);
+$config['base_url']=$config['base_url_environment'][ENVIRONMENT];
 $config['assets_url']='/assets';
 $config['module_path']=APPPATH.'modules';
 
@@ -166,7 +154,7 @@ $config['sms_notifications']=array(
 |
 */
 $config['response_keywords']=array(
-	'okay'=>array(
+	'ok on our way'=>array(
 		'ok',
 		'okay',
 		'on our way',
@@ -178,14 +166,15 @@ $config['response_keywords']=array(
 		'otw',
 		'yes',
 	),
-	'stay_at_bar'=>array(
-		'stay at bar',
-		'staying',
+	'stay at bar'=>array(
+		'stay',
 	),
-	'cancel'=>array(
+	'cancel table'=>array(
 		'cancel',
 		'no',
 		'not here',
+		'left',
+		'gone',
 	),
 );
 
