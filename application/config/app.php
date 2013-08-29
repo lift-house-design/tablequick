@@ -12,7 +12,7 @@
 $config['database_environments']=array(
 	'local'=>array(
 		'username'=>'root',
-		'password'=>'',
+		'password'=>'root',
 	),
 	'development'=>array(
 		'username'=>'thomas',
@@ -74,7 +74,7 @@ $config['copyright_format']='Copyright &copy; %1$s %2$d. All Rights Reserved.';
 |
 */
 $config['base_url_environment']=array(
-	'local'=>'http://tablequick.com',
+	'local'=>'http://local.tablequick.com',
 	'development'=>'http://tablequick.lifthousedesign.com',
 	'production'=>'http://tablequick.com',
 );

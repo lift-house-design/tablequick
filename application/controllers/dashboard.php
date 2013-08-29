@@ -8,10 +8,16 @@ class Dashboard extends App_Controller
 			'patron',
 		));
 
+		$this->data['nav_pages'] = array(
+			'/' => array('name' => 'Assign Seating', 'active' => ''),
+			'/table_feedback' => array('name' => 'Table Feedback', 'active' => ''),
+			'/guest_connection' => array('name' => 'Guest Connection', 'active' => '')
+		);
+
 		parent::__construct();
 	}
 
-	public function index()
+	private function _load_js_css()
 	{
 		// Load dataTables
 		$this->js[]=array(
@@ -41,7 +47,98 @@ class Dashboard extends App_Controller
 			'type'=>'plugins/pnotify',
 		);
 		$this->js[]='jquery.maskedinput.min.js';
+	}
+
+	public function index()
+	{
+		$this->_load_js_css();
 		$this->js[]='pages/dashboard-index.js';
+		$this->data['nav_pages']['/']['active'] = 'active';
+	}
+
+	public function table_feedback()
+	{
+		$this->_load_js_css();
+		$this->data['nav_pages']['/table_feedback']['active'] = 'active';
+	}
+
+	public function guest_connection()
+	{
+		$this->_load_js_css();
+		$this->js[]='pages/dashboard-guest-connection.js';
+		$this->data['nav_pages']['/guest_connection']['active'] = 'active';
+	}	
+
+	public function refresh_guest_connection()
+	{
+		$this->layout=FALSE;
+		$this->view=FALSE;
+
+		$patrons = $this->patron->get_guest_connections();
+		$data = array();
+		foreach($patrons as $patron)
+		{
+			$item=array(
+				$patron['id'],
+				date('m/d/Y - h:ia',strtotime($patron['last_seated'])),
+				$patron['name'],
+				$patron['phone'],
+				$patron['total_visits']	
+			);
+
+			$data[]=$item;
+		}
+
+		echo json_encode($data);
+	}
+
+	public function visit_details($id=0)
+	{
+		$this->_load_js_css();
+		//$this->js[]='pages/dashboard-visit-details.js';
+		$this->layout = FALSE; //'layouts/popup.php';
+		$this->data = $this->patron->get_visit_details($id);
+
+		//format timestamps
+		foreach($this->data['visits'] as $i => $v){
+			if(!$v['time_seated'])
+				$seated = '-';
+			else
+				$seated = date('m/d/Y - h:ia',strtotime($v['time_seated']));
+			$this->data['visits'][$i]['time_seated'] = $seated;
+			$this->data['visits'][$i]['time_in'] = date('m/d/Y - h:ia',strtotime($v['time_in']));
+		}
+	}
+
+	public function refresh_assign_seating()
+	{
+		$this->layout=FALSE;
+		$this->view=FALSE;
+
+		$patrons=$this->patron
+			->order_by('time_in')
+			->get_many_by(array(
+				'user_id'=>$this->user->data['id'],
+				'removed'=>0,
+			));
+
+		$data=array();
+
+		foreach($patrons as $patron)
+		{
+			$item=array(
+				$patron['id'],
+				date('m/d/Y / h:ia',strtotime($patron['time_in'])),
+				$patron['name'],
+				$patron['status'],
+				empty($patron['response']) ? '-' : $patron['response'],
+				empty($patron['table_number']) ? '-' : $patron['table_number'],
+			);
+
+			$data[]=$item;
+		}
+
+		echo json_encode($data);
 	}
 
 	public function new_customer($id=NULL)
@@ -72,37 +169,6 @@ class Dashboard extends App_Controller
 				}
 			}
 		}
-	}
-
-	public function refresh_data()
-	{
-		$this->layout=FALSE;
-		$this->view=FALSE;
-
-		$patrons=$this->patron
-			->order_by('time_in')
-			->get_many_by(array(
-				'user_id'=>$this->user->data['id'],
-				'removed'=>0,
-			));
-
-		$data=array();
-
-		foreach($patrons as $patron)
-		{
-			$item=array(
-				$patron['id'],
-				date('m/d/Y / h:ia',strtotime($patron['time_in'])),
-				$patron['name'],
-				$patron['status'],
-				empty($patron['response']) ? '-' : $patron['response'],
-				empty($patron['table_number']) ? '-' : $patron['table_number'],
-			);
-
-			$data[]=$item;
-		}
-
-		echo json_encode($data);
 	}
 
 	public function remove_customer($id)

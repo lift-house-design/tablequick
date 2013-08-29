@@ -267,9 +267,11 @@ input[type="radio"] {
   -webkit-background-clip: padding-box;
   -moz-background-clip: padding;
   background-clip: padding-box;
-  text-decoration: none; }
-  .button:hover {
-    background-color: #737373; }
+  text-decoration: none; 
+}
+.button:hover {
+    background-color: #737373; 
+}
   .button:visited {
     color: white; }
   .button.blue, .button.primary, input[type="submit"], input[type="button"],
@@ -290,8 +292,18 @@ input[type="radio"] {
       background-color: #288948; }
   .button.red {
     background-color: #841818; }
-    .button.red:hover {
-      background-color: #9a1c1c; }
+.button.red:hover {
+  background-color: #9a1c1c;
+}
+
+.button.button-nav{
+  margin:13px 0px 0px 13px;
+}
+.button.button-nav.active{
+  background-color: #0081e0; 
+}
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -569,6 +581,11 @@ header {
 | Pages - Dashboard
 |--------------------------------------------------------------------------
 */
+#customer-table,
+#connection-table {
+    width: 100% !important;
+}
+
 .refresh-notice {
   text-align: center;
   padding: 10px;
@@ -590,12 +607,23 @@ header {
   margin-top: 3px;
   margin-left: 10px; }
 
-#customer-table tr td.datetime, #customer-table tr th.datetime {
-  width: 150px;
-  text-align: center; }
-#customer-table tr td.patron-name, #customer-table tr th.patron-name {
-  text-align: left; }
-#customer-table tr td.status, #customer-table tr th.status {
+tr td.datetime, 
+tr th.datetime,
+tr td.datetime2, 
+tr th.datetime2 {
+  width: 140px;
+  text-align: center; 
+}
+tr td.patron-name, 
+tr th.patron-name,
+tr td.phone,
+tr th.phone,
+tr td.total-visits,
+tr th.total-visits {
+  text-align: left; 
+}
+tr td.status,
+tr th.status {
   width: 100px;
   text-align: center; }
 #customer-table tr td.response, #customer-table tr th.response {

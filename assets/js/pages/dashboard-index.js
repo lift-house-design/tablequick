@@ -13,7 +13,7 @@ function addPatron(data)
 function refreshTable(callback)
 {
 	$.ajax({
-		url: '/dashboard/refresh_data',
+		url: '/dashboard/refresh_assign_seating',
 		type: 'post',
 		dataType: 'json',
 		data: {
