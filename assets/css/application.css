@@ -1,5 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
-	/*
+/*
 |--------------------------------------------------------------------------
 | Variables
 |--------------------------------------------------------------------------
@@ -310,7 +310,8 @@ input[type="radio"] {
 */
 .notifications {
   border: 1px solid #0072c6;
-  background-color: #addcff; }
+  background-color: #addcff;
+  margin: 15px 0; }
 
 /*
 |--------------------------------------------------------------------------
