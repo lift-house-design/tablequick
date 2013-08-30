@@ -3,14 +3,12 @@
 	<thead>
 		<th class='datetime'>Time In</th>
 		<th class='datetime2'>Time Seated</th>
-		<th class='datetime3'>Employee</th>
 	</thead>
 	<tbody>
 		<? foreach($visits as $v){ ?>
 			<tr>
 				<td><?=$v['time_in']?></td>
 				<td><?=$v['time_seated']?></td>
-				<td><?=$v['employee']?></td>
 			</tr>
 		<? } ?>
 	</tbody>
@@ -31,10 +29,6 @@
 			{
 				sClass: 'datetime2',
 				aTargets: [1]
-			},
-			{
-				sClass: 'patron-name',
-				aTargets: [2]
 			}
 		],
 		fnCreatedRow: function(row,data,i){}
