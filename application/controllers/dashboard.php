@@ -19,14 +19,40 @@ class Dashboard extends App_Controller
 
 	private function _load_js_css()
 	{
+		/*<style type="text/css" title="currentStyle">
+			@import "../../media/css/demo_page.css";
+			@import "../../media/css/demo_table.css";
+			@import "media/css/TableTools.css";
+		</style>
+		<script type="text/javascript" charset="utf-8" src="../../media/js/jquery.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../../media/js/jquery.dataTables.js"></script>
+		<script type="text/javascript" charset="utf-8" src="media/js/ZeroClipboard.js"></script>
+		<script type="text/javascript" charset="utf-8" src="media/js/TableTools.js"></script>
+		<script type="text/javascript" charset="utf-8">*/
 		// Load dataTables
 		$this->js[]=array(
-			'file'=>'js/jquery.dataTables.min.js',
-			'type'=>'plugins/datatables',
+			'file'=>'media/js/jquery.js',
+			'type'=>'plugins/DataTables-1.9.4',
+		);
+		$this->js[]=array(
+			'file'=>'media/js/jquery.dataTables.js',
+			'type'=>'plugins/DataTables-1.9.4',
+		);
+		$this->js[]=array(
+			'file'=>'extras/TableTools/media/js/ZeroClipboard.js',
+			'type'=>'plugins/DataTables-1.9.4',
+		);
+		$this->js[]=array(
+			'file'=>'extras/TableTools/media/js/TableTools.js',
+			'type'=>'plugins/DataTables-1.9.4',
 		);
 		$this->css[]=array(
 			'file'=>'css/jquery.dataTables.css',
 			'type'=>'plugins/datatables',
+		);
+		$this->css[]=array(
+			'file'=>'extras/TableTools/media/css/TableTools.css',
+			'type'=>'plugins/DataTables-1.9.4',
 		);
 		// Load fancybox2
 		$this->js[]=array(
@@ -58,7 +84,8 @@ class Dashboard extends App_Controller
 
 	public function table_feedback()
 	{
-		$this->_load_js_css();
+		//$this->_load_js_css();
+		//$this->js[]='pages/dashboard-table-feedback.js';
 		$this->data['nav_pages']['/table_feedback']['active'] = 'active';
 	}
 
@@ -107,6 +134,26 @@ class Dashboard extends App_Controller
 				$seated = date('m/d/Y - h:ia',strtotime($v['time_seated']));
 			$this->data['visits'][$i]['time_seated'] = $seated;
 			$this->data['visits'][$i]['time_in'] = date('m/d/Y - h:ia',strtotime($v['time_in']));
+		}
+	}
+
+	public function send_text_offer()
+	{
+		$this->layout = FALSE;
+		$this->data = $this->input->post();
+		if(!empty($this->data['text'])){
+			$this->view = false;
+			$errors = array();
+			$this->data['numbers'] = array_unique($this->data['numbers']);
+			foreach($this->data['numbers'] as $i => $to){
+				$success = send_sms($this->data['text'],array(),$to);
+				if(!$success)
+					unset($this->data['numbers'][$i]);
+			}
+			if(empty($this->data['numbers']))
+				echo "Unable to send text messages.";
+			else
+				echo "Sent: {$this->data['text']}<br/><br/> To: ".join(', ',$this->data['numbers']);
 		}
 	}
 

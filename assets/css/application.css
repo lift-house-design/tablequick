@@ -586,6 +586,24 @@ header {
     width: 100% !important;
 }
 
+table tbody tr.even.DTTT_selected {
+  background-color: #B0BED9 !important;
+}
+
+table tbody tr.odd.DTTT_selected {
+  background-color: #9FAFD1 !important;
+}
+
+
+/*
+table tbody tr.even.DTTT_selected :hover {
+  background-color: #A0AEC9 !important;
+}
+table tbody tr.odd.DTTT_selected :hover {
+  background-color: #8F9FC1 !important;
+}
+*/
+
 .refresh-notice {
   text-align: center;
   padding: 10px;
@@ -634,15 +652,23 @@ tr th.status {
   text-align: center; }
 #customer-table tr td.actions, #customer-table tr th.actions {
   text-align: center;
-  width: 300px; }
-  #customer-table tr td.actions .button, #customer-table tr th.actions .button {
-    margin: 0 3px; }
-#customer-table tr.status-waiting td.actions .button.seat-ready, #customer-table tr.status-waiting th.actions .button.seat-ready {
-  display: inline-block; }
-#customer-table tr.status-waiting td.actions .button.seat-now, #customer-table tr.status-waiting th.actions .button.seat-now {
-  display: none; }
-#customer-table tr.status-waiting td.actions .button.cancel, #customer-table tr.status-waiting th.actions .button.cancel {
-  display: inline-block; }
+  width: 300px;
+}
+#customer-table tr td.actions .button, #customer-table tr th.actions .button {
+  margin: 0 3px;
+}
+#customer-table tr.status-waiting td.actions .button.seat-ready, 
+#customer-table tr.status-waiting th.actions .button.seat-ready {
+  display: inline-block;
+}
+#customer-table tr.status-waiting td.actions .button.seat-now,
+#customer-table tr.status-waiting th.actions .button.seat-now {
+  display: inline-block;
+}
+#customer-table tr.status-waiting td.actions .button.cancel,
+#customer-table tr.status-waiting th.actions .button.cancel {
+  display: inline-block;
+}
 #customer-table tr.status-waiting td.actions .button.new-request, #customer-table tr.status-waiting th.actions .button.new-request {
   display: none; }
 #customer-table tr.status-waiting td.actions .button.remove, #customer-table tr.status-waiting th.actions .button.remove {

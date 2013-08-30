@@ -4,7 +4,7 @@
 
 <hr/>
 
-<?php echo anchor('javascript:void(0)','Send Text Offer',array('class'=>'send-text-offer primary button float-right')) ?>
+<a href="javascript:send_text_offer_popup()" class="send-text-offer primary button float-right" style="margin:1px 0px">Send Text Offer</a>
 <table id="customer-table" style="width:99%">
 	<thead>
 		<tr>
@@ -20,5 +20,5 @@
 	</tbody>
 </table>
 <div id="actions-template" class="hidden">
-	<?php echo anchor('javascript:void(0)','Visit Details',array('class'=>'visit-details button blue')) ?>
+	<a href="javascript:void(0)" class="visit-details button blue">Visit Details</a>
 </div>
