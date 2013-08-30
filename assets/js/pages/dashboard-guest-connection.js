@@ -35,22 +35,15 @@ function send_text_offer_popup()
 	});
 }
 
-function addPatron(data,patrons)
+function addPatron(data)
 {
 	var dataTable=$('#customer-table').dataTable();
-	var oTT = TableTools.fnGetInstance( 'customer-table' );
 
 	if(data.length==5)
 	{
 		var actions=$('#actions-template').clone().removeAttr('id').removeClass('hidden').html();
 		data.push(actions);
 		dataTable.fnAddData(data);
-
-		// reselect selected rows
-		$.each(patrons,function(i,p){
-			if(data[2] === p[2] && data[3] === p[3])
-    			oTT.fnSelect( $('#customer-table tbody tr:last') );
-		});
 	}
 }
 
@@ -59,6 +52,7 @@ function refreshTable(callback)
 {
 	var oTT = TableTools.fnGetInstance( 'customer-table' );
     var patrons = oTT.fnGetSelectedData();
+    console.log(patrons);
 
 	$.ajax({
 		url: '/dashboard/refresh_guest_connection',
@@ -70,7 +64,20 @@ function refreshTable(callback)
 			dataTable.fnClearTable();
 
 			for(var i in data)
-				addPatron(data[i],patrons);
+				addPatron(data[i]);
+
+			// reselect selected rows
+			var rows = dataTable.fnGetNodes();
+			$.each(rows, function(i, row){
+				data = dataTable.fnGetData(row);
+				$.each(patrons,function(j, p){
+					if(data[2] === p[2] && data[3] === p[3]){
+						console.log("row "+i+" : "+data[2]+" - "+data[3]+" matches "+p[2]+" - "+p[3]);
+    					oTT.fnSelect( $('#customer-table tbody tr')[i] );
+    					return;
+    				}
+				});
+			});
 
 			if(typeof callback == 'function')
 				callback();
@@ -78,19 +85,15 @@ function refreshTable(callback)
 	});
 }
 
+/*
+Doesn't seem to work with fnGetSelected when sorting column is changed. 
+fnGetSelected returns the wrong row like a damn retard.
 setInterval(function(){
-	/*$('<div class="refresh-notice">')
-		.html('Refreshing data...')
-		.prependTo('#contents');*/
-
-	refreshTable(/*function(){
-		$('.refresh-notice').remove();
-	}*/);
-},60000);
+	refreshTable();
+},1000);*/
 
 $(function()
 {
-
 	$('#customer-table').dataTable({
 		sPaginationType: 'full_numbers',
 		aaSorting: [],
