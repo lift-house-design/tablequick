@@ -84,7 +84,7 @@ class Site extends App_Controller
 					'phone'=>$data['phone'],
 					'confirm_url'=>site_url('confirm-account/'.$user_id.'/'.$data['confirm_code']),
 				);
-				$this->notification->send('user_registered',$notification_data,$data['email'],$data['phone']);
+				$this->notification->send('user_registered',$notification_data,$data['email']/*,$data['phone']*/);
 				$this->form_validation->reset_values();
 				$this->set_notification('You have been sent an e-mail with a link that will verify your e-mail address and activate your account. Thank you for registering!');
 			}
@@ -121,7 +121,7 @@ class Site extends App_Controller
 					'phone'=>$user['phone'],
 					'login_url'=>site_url(),
 				);
-				$this->notification->send('user_confirmed',$notification_data,$user['email'],$user['phone']);
+				$this->notification->send('user_confirmed',$notification_data,$user['email']/*,$user['phone']*/);
 			}
 		}
 	}
