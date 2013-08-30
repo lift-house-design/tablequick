@@ -52,7 +52,6 @@ function refreshTable(callback)
 {
 	var oTT = TableTools.fnGetInstance( 'customer-table' );
     var patrons = oTT.fnGetSelectedData();
-    console.log(patrons);
 
 	$.ajax({
 		url: '/dashboard/refresh_guest_connection',
@@ -72,8 +71,7 @@ function refreshTable(callback)
 				data = dataTable.fnGetData(row);
 				$.each(patrons,function(j, p){
 					if(data[2] === p[2] && data[3] === p[3]){
-						console.log("row "+i+" : "+data[2]+" - "+data[3]+" matches "+p[2]+" - "+p[3]);
-    					oTT.fnSelect( $('#customer-table tbody tr')[i] );
+    					oTT.fnSelect( row );
     					return;
     				}
 				});
@@ -88,9 +86,10 @@ function refreshTable(callback)
 /*
 Doesn't seem to work with fnGetSelected when sorting column is changed. 
 fnGetSelected returns the wrong row like a damn retard.
+*/
 setInterval(function(){
 	refreshTable();
-},1000);*/
+},60000);
 
 $(function()
 {
