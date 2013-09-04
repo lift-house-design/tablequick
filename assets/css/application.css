@@ -10,6 +10,7 @@ div.dataTables_options input{ width:120px !important; }
 .DTTT_button{ margin:2px 8px 0 0 !important;float:right !important;}
 .send-text-offer{ margin-top:3px !important;}
 .error {border-color:red !important}
+#qr-print{ display:none;}
 
 /*
 |--------------------------------------------------------------------------

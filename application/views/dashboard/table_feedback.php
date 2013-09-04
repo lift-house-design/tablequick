@@ -40,3 +40,10 @@
 	<a href="javascript:void(0)" class="visit-details button blue">Visit Details</a>
 </div>
 */?>
+<div id="qr-print" style="height:300px;width:300px;padding-left:100px;text-align:center;-webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg);filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);">
+<h1>TableQuick</h1>
+<h3>Scan and connect<br/>with our manager</h3>
+<img id="qr-print-img"/><br/>
+<span id="qr-print-table-number"></span><br/>
+<span id="qr-print-server-name"></span>
+</div>

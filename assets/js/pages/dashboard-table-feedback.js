@@ -72,7 +72,7 @@ function param_encode(str)
 
 function qr_print()
 {
-	$('#qr-image').printElement();
+	$('#qr-print').printElement();
 }
 
 function qr_code()
@@ -87,6 +87,12 @@ function qr_code()
 	}
 	var target_url = "http://"+document.domain+"/site/customer_feedback/"+param_encode(user_id)+"/"+param_encode(table_number)+"/"+param_encode(server_name);
 	var qr_url = "http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl="+encodeURI(target_url)+"&chld=H|0";
+	$('#qr-print-img').attr('src',qr_url);
+	$('#qr-print-table-number').html('Table: '+table_number);
+	if(server_name)
+		$('#qr-print-server-name').html('Server: '+server_name);
+	else
+		$('#qr-print-server-name').html('');
 	$.fancybox.open({
 		type: 'ajax',
 		content: 
