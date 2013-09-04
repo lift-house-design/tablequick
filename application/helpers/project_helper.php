@@ -148,6 +148,9 @@ if(!function_exists('send_sms'))
 			$message=str_replace('{'.$k.'}',$v,$message);
 		}
 
+		if(strlen($message) > 160)
+			$message = substr($message,0,157).'...';
+
 		$response=$CI->twilio->sms($config['config']['number'],$to,$message);
 
 		return $response->IsError===FALSE;
@@ -159,10 +162,14 @@ if(!function_exists('parse_phone'))
 	function parse_phone($str)
 	{
 		$regexp='/\(?(\d{3})\)?\s?(\d{3})[-\s]?(\d{4})/';
+		//remove non-digit characters
+		$numbers = preg_replace('/[^0-9]/','',$str);
+		//remove leading 1
+		$numbers = preg_replace('/^1/','',$numbers);
 
-		if(preg_match($regexp,$str,$matches) && count($matches)>=4)
+		if(strlen($numbers) == 10)
 		{
-			return '('.$matches[1].') '.$matches[2].'-'.$matches[3];
+			return '('.substr($numbers,0,3).') '.substr($numbers,3,3).'-'.substr($numbers,6,4);
 		}
 		else
 			return FALSE;

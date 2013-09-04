@@ -1,4 +1,16 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
+
+span.qr-wrap{ padding:0px !important;float:right; }
+span.qr-wrap input{ margin-left:13px; width:140px; }
+#qr-table-number{ width:100px !important;}
+#qr-server-name{ width:120px !important;}
+div.dataTables_options select{ width:auto !important; }
+div.dataTables_options input{ width:120px !important; }
+#customer-table_length{ margin-left:20px;}
+.DTTT_button{ margin:2px 8px 0 0 !important;float:right !important;}
+.send-text-offer{ margin-top:3px !important;}
+.error {border-color:red !important}
+
 /*
 |--------------------------------------------------------------------------
 | Variables

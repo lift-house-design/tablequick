@@ -14,6 +14,60 @@ class Site extends App_Controller
 		
 	}
 
+	public function customer_feedback($user_id='',$table_number='',$server_name='')
+	{
+		if($this->input->post('user_id'))
+		{
+			// get post data & user info
+			$this->data = $this->input->post();
+			$this->data['user_id'] = intval($this->data['user_id']);
+			$this->data['phone'] = parse_phone($this->data['phone']);
+			$user = $this->db->query('select email, phone, phone_text_capable from user where id='.$this->data['user_id'])->row_array();
+			// if valid user and comment, insert and send notification
+			if(!empty($user) && !empty($this->data['comment']))
+			{
+				$this->db->insert('patron_feedback',$this->data);
+
+				// send feedback notification to restaurant manager
+				$subject = "Feedback received for " .
+					($this->data['server_name'] ? $this->data['server_name'] . " at " : "") .
+					"table " . $this->data['table_number'];
+				$message = $subject . "\nFrom " . $this->data['name'] .
+					" ".$this->data['phone'] . "\n". $this->data['comment'];
+				if($user['phone_text_capable'])
+				{
+					$to = $user['phone'];
+					send_sms($message,array(),$to);
+				}
+				$to = $user['email'];
+				send_email($subject,$message,array(),$to);
+			}
+		}
+		else
+		{
+			$this->js[]=array(
+				'file'=>'media/js/jquery.js',
+				'type'=>'plugins/DataTables-1.9.4',
+			);
+			$this->js[]=array(
+				'file'=>'jquery.validate.js',
+				'type'=>'plugins',
+			);
+			$this->js[]=array(
+				'file'=>'additional-methods.js',
+				'type'=>'plugins',
+			);
+			$this->data['user_id'] = intval(base64_decode($user_id));
+			$this->data['table_number'] = base64_decode($table_number);
+			$this->data['server_name'] = base64_decode($server_name);
+
+			if(!$user_id || !$table_number)
+			{
+				redirect('/');
+			}
+		}
+	}
+
 	public function log_in()
 	{
 		if($this->input->post() && $this->user->log_in())

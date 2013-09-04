@@ -94,14 +94,10 @@ setInterval(function(){
 $(function()
 {
 	$('#customer-table').dataTable({
-		sPaginationType: 'full_numbers',
 		aaSorting: [],
-//		sDom: '<"dataTables_options"lf>rtip',
-		oTableTools: {
-			sRowSelect: "multi",
-			aButtons: [ "select_all", "select_none" ]
-		},
-		"sDom": 'T<"dataTables_options">lfrtip',
+		sPaginationType: 'full_numbers',
+		sDom: 'T<"dataTables_options"lf>rtip',
+		//"sDom": 'T<"dataTables_options">lfrtip',
 		aoColumnDefs: [
 			{
 				bSortable: false,
@@ -132,6 +128,10 @@ $(function()
 				aTargets: [5]
 			}
 		],
+		oTableTools: {
+			sRowSelect: "multi",
+			aButtons: [ "select_none", "select_all"  ]
+		},
 		fnCreatedRow: function(row,data,i){}
 	});
 

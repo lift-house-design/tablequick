@@ -11,6 +11,7 @@
 		array('name'=>'author','content'=>'Nick Niebaum (nickniebaum@gmail.com)'),
 	)) ?>
 	<?php echo css($css) ?>
+	<?php echo js($js) ?>
 </head>
 <body>
 <div id="account">
@@ -67,7 +68,6 @@
 		<?php echo $yield ?>
 	</div>
 </div>
-<?php echo js($js) ?>
 <?php if($ga_code!==false): ?>
 <script>
 	var _gaq=[['_setAccount','<?php echo $ga_code ?>'],['_trackPageview']];

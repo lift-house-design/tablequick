@@ -15,64 +15,9 @@ class Dashboard extends App_Controller
 		);
 
 		parent::__construct();
-	}
 
-	private function _load_js_css()
-	{
-		/*<style type="text/css" title="currentStyle">
-			@import "../../media/css/demo_page.css";
-			@import "../../media/css/demo_table.css";
-			@import "media/css/TableTools.css";
-		</style>
-		<script type="text/javascript" charset="utf-8" src="../../media/js/jquery.js"></script>
-		<script type="text/javascript" charset="utf-8" src="../../media/js/jquery.dataTables.js"></script>
-		<script type="text/javascript" charset="utf-8" src="media/js/ZeroClipboard.js"></script>
-		<script type="text/javascript" charset="utf-8" src="media/js/TableTools.js"></script>
-		<script type="text/javascript" charset="utf-8">*/
-		// Load dataTables
-		$this->js[]=array(
-			'file'=>'media/js/jquery.js',
-			'type'=>'plugins/DataTables-1.9.4',
-		);
-		$this->js[]=array(
-			'file'=>'media/js/jquery.dataTables.js',
-			'type'=>'plugins/DataTables-1.9.4',
-		);
-		$this->js[]=array(
-			'file'=>'extras/TableTools/media/js/ZeroClipboard.js',
-			'type'=>'plugins/DataTables-1.9.4',
-		);
-		$this->js[]=array(
-			'file'=>'extras/TableTools/media/js/TableTools.js',
-			'type'=>'plugins/DataTables-1.9.4',
-		);
-		$this->css[]=array(
-			'file'=>'css/jquery.dataTables.css',
-			'type'=>'plugins/datatables',
-		);
-		$this->css[]=array(
-			'file'=>'extras/TableTools/media/css/TableTools.css',
-			'type'=>'plugins/DataTables-1.9.4',
-		);
-		// Load fancybox2
-		$this->js[]=array(
-			'file'=>'jquery.fancybox.pack.js',
-			'type'=>'plugins/fancybox2',
-		);
-		$this->css[]=array(
-			'file'=>'jquery.fancybox.css',
-			'type'=>'plugins/fancybox2',
-		);
-		// Load pines notify
-		$this->js[]=array(
-			'file'=>'jquery.pnotify.min.js',
-			'type'=>'plugins/pnotify',
-		);
-		$this->css[]=array(
-			'file'=>'jquery.pnotify.default.css',
-			'type'=>'plugins/pnotify',
-		);
-		$this->js[]='jquery.maskedinput.min.js';
+		if(!$this->user->logged_in)
+			redirect('/');
 	}
 
 	public function index()
@@ -84,9 +29,18 @@ class Dashboard extends App_Controller
 
 	public function table_feedback()
 	{
-		//$this->_load_js_css();
-		//$this->js[]='pages/dashboard-table-feedback.js';
+		$this->_load_js_css();
+		$this->js[]='pages/dashboard-table-feedback.js';
+		$this->js[]=array(
+			'file'=>'jquery.base64.min.js',
+			'type'=>'plugins/jquery-base64-master',
+		);
+		$this->js[]=array(
+			'file'=>'jquery.printElement.min.js',
+			'type'=>'plugins',
+		);
 		$this->data['nav_pages']['/table_feedback']['active'] = 'active';
+		$this->data['user'] = $this->user->data;
 	}
 
 	public function guest_connection()
@@ -107,10 +61,33 @@ class Dashboard extends App_Controller
 		{
 			$item=array(
 				$patron['id'],
-				date('m/d/Y - h:ia',strtotime($patron['last_seated'])),
+				date('m/d/Y - h:ia',strtotime($patron['last_in'])),
 				$patron['name'],
 				$patron['phone'],
 				$patron['total_visits']	
+			);
+
+			$data[]=$item;
+		}
+
+		echo json_encode($data);
+	}
+
+	public function refresh_table_feedback()
+	{
+		$this->layout=FALSE;
+		$this->view=FALSE;
+
+		$patrons = $this->db->query('select * from patron_feedback where user_id='.$this->user->data['id'].' order by time desc')->result_array();
+		$data = array();
+		foreach($patrons as $patron)
+		{
+			$item=array(
+				$patron['id'],
+				date('m/d/Y - h:ia',strtotime($patron['time'])),
+				$patron['table_number'],
+				$patron['server_name'],
+				substr(wordwrap($patron['comment'],30,"\n",true),0,2000)	
 			);
 
 			$data[]=$item;
@@ -399,6 +376,54 @@ class Dashboard extends App_Controller
 			$sql='insert into sms_exception (error, data) values ('.$this->db->escape($e->getMessage()).','.$this->db->escape($data).')';
 			$this->db->query($sql);
 		}
+	}
+
+	private function _load_js_css()
+	{
+		// Load dataTables
+		$this->js[]=array(
+			'file'=>'media/js/jquery.js',
+			'type'=>'plugins/DataTables-1.9.4',
+		);
+		$this->js[]=array(
+			'file'=>'media/js/jquery.dataTables.js',
+			'type'=>'plugins/DataTables-1.9.4',
+		);
+		$this->js[]=array(
+			'file'=>'extras/TableTools/media/js/ZeroClipboard.js',
+			'type'=>'plugins/DataTables-1.9.4',
+		);
+		$this->js[]=array(
+			'file'=>'extras/TableTools/media/js/TableTools.js',
+			'type'=>'plugins/DataTables-1.9.4',
+		);
+		$this->css[]=array(
+			'file'=>'css/jquery.dataTables.css',
+			'type'=>'plugins/datatables',
+		);
+		$this->css[]=array(
+			'file'=>'extras/TableTools/media/css/TableTools.css',
+			'type'=>'plugins/DataTables-1.9.4',
+		);
+		// Load fancybox2
+		$this->js[]=array(
+			'file'=>'jquery.fancybox.pack.js',
+			'type'=>'plugins/fancybox2',
+		);
+		$this->css[]=array(
+			'file'=>'jquery.fancybox.css',
+			'type'=>'plugins/fancybox2',
+		);
+		// Load pines notify
+		$this->js[]=array(
+			'file'=>'jquery.pnotify.min.js',
+			'type'=>'plugins/pnotify',
+		);
+		$this->css[]=array(
+			'file'=>'jquery.pnotify.default.css',
+			'type'=>'plugins/pnotify',
+		);
+		$this->js[]='jquery.maskedinput.min.js';
 	}
 
 	private function _log($msg)

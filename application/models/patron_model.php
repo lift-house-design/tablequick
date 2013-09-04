@@ -19,7 +19,7 @@
 	/*-----------------------------------------------------------------------*/
 
 		public function get_guest_connections(){
-			$query = 'select id,max(time_seated) as last_seated,name,phone,count(time_seated) as total_visits from patron where time_seated is not null and user_id='.$this->user->data['id'].' group by name,phone order by max(time_seated) desc;';
+			$query = 'select id,max(time_in) as last_in,name,phone,count(time_in) as total_visits from patron where user_id='.$this->user->data['id'].' group by name,phone order by max(time_in) desc;';
 			return $this->_database->query($query)->result_array();
 		}
 

@@ -9,7 +9,7 @@
 	<thead>
 		<tr>
 			<th>ID</td>
-			<th class="datetime">Last Seated</th>
+			<th class="datetime">Last In</th>
 			<th class="patron-name">Patron Name</th>
 			<th class="phone">Mobile Number</th>
 			<th class="total-visits">Total Visits</th>
