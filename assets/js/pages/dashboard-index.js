@@ -40,7 +40,7 @@ setInterval(function(){
 	refreshTable(/*function(){
 		$('.refresh-notice').remove();
 	}*/);
-},5000);
+},50000);
 
 $(function(){
 	$('#customer-table').dataTable({
@@ -312,6 +312,7 @@ $(function(){
 					table_number: table_number
 				},
 				success: function(data,textStatus,jqXHR){
+					console.log(data);
 					refreshTable(function(){
 						$.fancybox.close();
 					});
@@ -351,6 +352,7 @@ $(function(){
 					id: id
 				},
 				success: function(data,textStatus,jqXHR){
+					console.log(data);
 					refreshTable(function(){
 						$.fancybox.close();
 					});

@@ -260,17 +260,19 @@ class Dashboard extends App_Controller
 			$patron=$this->patron->get($patron_id);
 
 			// 141 chars
-			$message='Hi, {name} - your table is now ready. Please reply with "okay", "stay at bar", or "cancel" to notify the hostess of your decision. Thank you!';
+			$message='Hi, {name} - your table is now ready. Please reply with "okay", "stay at bar", or "cancel".';
 			
 			if(send_sms($message,$patron,$patron['phone']))
 			{
 				$this->patron->update($patron_id,array(
 					'status'=>'Notified'
 				));
+				echo json_encode('success');
+			}else{
+				echo json_encode('Error sending SMS');
 			}
 
 			$this->view=FALSE;
-			exit;
 		}
 		else
 		{
@@ -311,21 +313,12 @@ class Dashboard extends App_Controller
 					| Find the patron that sent the text
 					|--------------------------------------------------------------------------
 					*/
-					$from_phone=$data['From'];
-					$message=trim(strtolower($data['Body']));
-
-					// Parse out the 10-digit phone number
-					$regexp='/(\+1)?(\d{10})/';
-					preg_match($regexp,$from_phone,$matches);
-
-					if(count($matches)!=3)
-						throw new Exception('From phone number in an unexpected format');
-
-					$from_phone=$matches[2]; // Should now have a phone number like 5551114444
-					$from_phone=parse_phone($from_phone); // Should now have a phone number like (555) 111-4444
+					$from_phone = parse_phone($data['From']);
 
 					if($from_phone===FALSE)
-						throw new Exception('From phone number unable to be formatted');
+						throw new Exception('From phone number unable to be formatted - "'.$data['From'].'" = "'.$form_phone.'"');
+
+					$message = trim(strtolower($data['Body']));
 
 					$patron=$this->patron
 						->order_by('time_in','desc') // We want the latest entry of this patron (otherwise we may update an old entry)
@@ -363,6 +356,8 @@ class Dashboard extends App_Controller
 				{
 					throw new Exception('Incorrect Twilio data posted');
 				}
+			}else{
+				throw new Exception("No Post Data???");
 			}
 		}
 		catch (Exception $e)
