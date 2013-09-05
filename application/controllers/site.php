@@ -11,7 +11,10 @@ class Site extends App_Controller
 
 	public function index()
 	{
-		
+		$this->css[]=array(
+			'file'=>'css/bootstrap.min.css',
+			'type'=>'plugins/bootstrap'
+		);
 	}
 
 	public function customer_feedback($user_id='',$table_number='',$server_name='')

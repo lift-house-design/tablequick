@@ -17,9 +17,6 @@
 <div id="account">
 	<div class="wrapper">
 	<?php if($logged_in): ?>
-		<?php if($this->uri->rsegment(1) != 'dashboard'): ?>
-			<?php echo anchor('dashboard','Go to Dashboard',array('class'=>'float-left')) ?>
-		<?php endif; ?>
 
 		Welcome, <?php echo anchor('#',trim($user['first_name'].' '.$user['last_name'])) ?> |
 		<?php echo anchor('dashboard','Dashboard') ?> |
