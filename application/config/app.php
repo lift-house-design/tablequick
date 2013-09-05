@@ -1,5 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+$config['error_email'] = 'bain.lifthousedesign@gmail.com';
+
 /*
 |--------------------------------------------------------------------------
 | Database Configuration

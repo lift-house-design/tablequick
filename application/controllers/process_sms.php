@@ -6,90 +6,73 @@ class Process_sms extends App_Controller
 	{
 		$this->models=array_merge($this->models,array(
 			'patron',
+			'log'
 		));
 
 		parent::__construct();
-	}
-
-	public function log_error($string,$array=array())
-	{
-
 	}
 
 	public function index()
 	{
 		$this->layout=FALSE;
 		$this->view=FALSE;
-		$log = '';
-		try
+		$data=$this->input->post();
+		if(empty($data))
+			$this->log->error("No Post Data in process_sms",$_SERVER,true);
+		if(!isset($data['From']) || !isset($data['Body']))
+			$this->log->error("Bad POST data from Twilio",$data,true);
+
+		$from_phone = parse_phone($data['From']);
+		if(!$from_phone)
+			$this->log->error('From phone number unable to be formatted - "'.$data['From'].'" = "'.$from_phone.'"',$data,true);
+
+		$message = trim(strtolower($data['Body']));
+
+		$patron = $this->patron
+			->order_by('time_in','desc') // We want the latest entry of this patron (otherwise we may update an old entry)
+			->get_by(array(
+				'phone'=>$from_phone,
+				'removed'=>0,
+				'status'=>'Notified', // Make sure this patron has been notified and has not responded yet
+			));
+
+		if(empty($patron))
+			$this->log->error('Unable to find Notified Patron',$data,true);
+
+		$response_keywords=$this->config->item('response_keywords');
+
+		foreach($response_keywords as $response=>$keywords)
 		{
-			if($data=$this->input->post())
+			// Check for this response's keywords
+			foreach($keywords as $keyword)
 			{
-				if(isset($data['From']) && isset($data['Body']))
+				if(stripos($message,$keyword)!==FALSE)
 				{
-					/*
-					|--------------------------------------------------------------------------
-					| Find the patron that sent the text
-					|--------------------------------------------------------------------------
-					*/
-					$from_phone = parse_phone($data['From']);
-
-					if($from_phone===FALSE)
-						throw new Exception('From phone number unable to be formatted - "'.$data['From'].'" = "'.$form_phone.'"');
-
-					$message = trim(strtolower($data['Body']));
-
-					$patron=$this->patron
-						->order_by('time_in','desc') // We want the latest entry of this patron (otherwise we may update an old entry)
-						->get_by(array(
-							'phone'=>$from_phone,
-							'removed'=>0,
-							'status'=>'Notified', // Make sure this patron has been notified and has not responded yet
-						));
-
-					if(empty($patron))
-						throw new Exception('Unable to find patron');
-					
-					$response_keywords=$this->config->item('response_keywords');
-
-					foreach($response_keywords as $response=>$keywords)
-					{
-						// Check for this response's keywords
-						foreach($keywords as $keyword)
-						{
-							if(strpos($message,$keyword)!==FALSE)
-							{
-								// Found the keyword
-								return $this->patron->update($patron['id'],array(
-									'response'=>$response,
-									'status'=>'Notified/Replied',
-								));
-							}
-						}
-					}
-
-					// At this point, no keywords were found
-					throw new Exception('Unable to determine request');
+					// Found the keyword
+					$this->patron->update($patron['id'],array(
+						'response' => $response,
+						'status' => 'Notified/Replied',
+					));
+					$this->log->log(
+						"'$reponse' Response received from patron",
+						array(
+							'calculated_response' => $response,
+							'received_response' => $message
+						),
+						true
+					);
+					return true;
 				}
-				else
-				{
-					throw new Exception('Incorrect Twilio data posted');
-				}
-			}else{
-				throw new Exception("No Post Data???");
 			}
 		}
-		catch (Exception $e)
-		{
-			// Dump the POST data
-			ob_start();
-			var_dump($_POST);
-			$data=ob_get_clean();
-
-			// Log it for later
-			$sql='insert into sms_exception (error, data) values ('.$this->db->escape($e->getMessage()).','.$this->db->escape($data).')';
-			$this->db->query($sql);
-		}
+		$this->log->error(
+			'Unable to determine patron response',
+			array(
+				'received_response' => $message,
+				'response_keywords' => $response_keywords
+			),
+			true
+		);
 	}
 }
 
