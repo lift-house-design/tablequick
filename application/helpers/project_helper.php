@@ -152,7 +152,6 @@ if(!function_exists('send_sms'))
 			$message = substr($message,0,157).'...';
 
 		$response=$CI->twilio->sms($config['config']['number'],$to,$message);
-		var_dump($response);
 		return $response->IsError===FALSE;
 	}
 }
