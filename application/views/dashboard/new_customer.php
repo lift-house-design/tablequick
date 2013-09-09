@@ -9,6 +9,10 @@
 		'confirm_sms'=>FALSE,
 		'value'=>isset($patron) ? $patron['phone'] : '',
 	)) ?>
+	<?php echo form_field('Party Size','party_size','text',array(
+		'required'=>TRUE,
+		'value'=>isset($patron) ? $patron['party_size'] : '',
+	)) ?>
 	<?php echo form_field('Time In','time_in','readonly',array(
 		'value'=>date('Y-m-d H:i:s'),
 		'display'=>date('m/d/Y / h:ia'),

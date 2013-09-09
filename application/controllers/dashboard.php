@@ -154,6 +154,7 @@ class Dashboard extends App_Controller
 				$patron['id'],
 				date('m/d/Y / h:ia',strtotime($patron['time_in'])),
 				$patron['name'],
+				$patron['party_size'],
 				$patron['status'],
 				empty($patron['response']) ? '-' : $patron['response'],
 				empty($patron['table_number']) ? '-' : $patron['table_number'],
@@ -168,13 +169,13 @@ class Dashboard extends App_Controller
 	public function new_customer($id=NULL)
 	{
 		$this->layout=FALSE;
-
 		if($data=$this->input->post())
 		{
 			$this->patron->insert(array(
 				'user_id'=>$this->user->data['id'],
 				'name'=>$data['name'],
 				'phone'=>$data['phone'],
+				'party_size'=>intval($data['party_size']),
 				'status'=>'Waiting',
 				'time_in'=>$data['time_in'],
 			));

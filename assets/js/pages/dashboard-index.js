@@ -2,12 +2,9 @@ function addPatron(data)
 {
 	var dataTable=$('#customer-table').dataTable();
 
-	if(data.length==6)
-	{
-		var actions=$('#actions-template').clone().removeAttr('id').removeClass('hidden').html();
-		data.push(actions);
-		dataTable.fnAddData(data);
-	}
+	var actions=$('#actions-template').clone().removeAttr('id').removeClass('hidden').html();
+	data.push(actions);
+	dataTable.fnAddData(data);
 }
 
 function refreshTable(callback)
@@ -65,25 +62,29 @@ $(function(){
 				aTargets: [2]
 			},
 			{
-				sClass: 'status',
+				sClass: 'table',
 				aTargets: [3]
 			},
 			{
-				sClass: 'response',
+				sClass: 'status',
 				aTargets: [4]
 			},
 			{
-				sClass: 'table',
+				sClass: 'response',
 				aTargets: [5]
 			},
 			{
-				sClass: 'actions',
+				sClass: 'table',
 				aTargets: [6]
+			},
+			{
+				sClass: 'actions',
+				aTargets: [7]
 			}
 		],
 		fnCreatedRow: function(row,data,i){
 			// Add class to row
-			var status=data[3];
+			var status=data[4];
 
 			switch(status)
 			{
@@ -246,25 +247,18 @@ $(function(){
 				.find('.buttons')
 				.html('Please wait...');
 
-			var name=$(this)
-				.find('input[name="name"]')
-				.val();
-			var phone=$(this)
-				.find('input[name="phone"]')
-				.val();
-			var time_in=$(this)
-				.find('input[name="time_in"]')
-				.val();
+			var data = {
+				name: $(this).find('input[name="name"]').val(),
+				phone: $(this).find('input[name="phone"]').val(),
+				time_in: $(this).find('input[name="time_in"]').val(),
+				party_size: $(this).find('input[name="party_size"]').val()
+			};
 			
 			// Send the request
 			$.ajax({
 				url: $(this).attr('action'),
 				type: 'post',
-				data: {
-					name: name,
-					phone: phone,
-					time_in: time_in
-				},
+				data: data,
 				success: function(data,textStatus,jqXHR){
 					refreshTable(function(){
 						$.fancybox.close();
