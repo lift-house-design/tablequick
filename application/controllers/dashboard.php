@@ -158,6 +158,9 @@ class Dashboard extends App_Controller
 				$patron['status'],
 				empty($patron['response']) ? '-' : $patron['response'],
 				empty($patron['table_number']) ? '-' : $patron['table_number'],
+				$patron['table_location'],
+				$patron['special_seating'],
+				$patron['notes']
 			);
 
 			$data[]=$item;
@@ -178,6 +181,9 @@ class Dashboard extends App_Controller
 				'party_size'=>intval($data['party_size']),
 				'status'=>'Waiting',
 				'time_in'=>$data['time_in'],
+				'table_location'=>trim($data['table_location']),
+				'special_seating'=>$data['special_seating'],
+				'notes'=>$data['notes']
 			));
 			$this->view=FALSE;
 			exit;

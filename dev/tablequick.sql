@@ -1,145 +1,234 @@
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+-- MySQL dump 10.13  Distrib 5.5.29, for osx10.6 (i386)
+--
+-- Host: localhost    Database: tablequick
+-- ------------------------------------------------------
+-- Server version	5.5.29
 
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- -----------------------------------------------------
--- Table `user`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `user` ;
+--
+-- Table structure for table `log`
+--
 
-CREATE  TABLE IF NOT EXISTS `user` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `email` VARCHAR(64) NOT NULL ,
-  `password` VARCHAR(64) NOT NULL ,
-  `first_name` VARCHAR(32) NOT NULL ,
-  `last_name` VARCHAR(32) NULL ,
-  `phone` VARCHAR(14) NOT NULL ,
-  `phone_text_capable` TINYINT NOT NULL DEFAULT 0 ,
-  `confirm_code` VARCHAR(8) NULL ,
-  `created_at` DATETIME NOT NULL ,
-  `updated_at` DATETIME NULL ,
-  `last_login` DATETIME NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB;
+DROP TABLE IF EXISTS `log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `message` text,
+  `data` text,
+  `type` enum('log','error') DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `log`
+--
 
--- -----------------------------------------------------
--- Table `role`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `role` ;
+LOCK TABLES `log` WRITE;
+/*!40000 ALTER TABLE `log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `log` ENABLE KEYS */;
+UNLOCK TABLES;
 
-CREATE  TABLE IF NOT EXISTS `role` (
-  `user_id` INT NOT NULL ,
-  `role` VARCHAR(32) NOT NULL ,
-  INDEX `fk_role_user_idx` (`user_id` ASC) ,
-  PRIMARY KEY (`user_id`, `role`) ,
-  CONSTRAINT `fk_role_user`
-    FOREIGN KEY (`user_id` )
-    REFERENCES `user` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+--
+-- Table structure for table `logger`
+--
 
+DROP TABLE IF EXISTS `logger`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `logger` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `data` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- -----------------------------------------------------
--- Table `notification`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `notification` ;
+--
+-- Dumping data for table `logger`
+--
 
-CREATE  TABLE IF NOT EXISTS `notification` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `key` VARCHAR(64) NOT NULL ,
-  `name` VARCHAR(64) NOT NULL ,
-  `description` TEXT NULL ,
-  `vars` TEXT NOT NULL ,
-  `email_enabled` TINYINT NOT NULL DEFAULT 0 ,
-  `email_subject` TEXT NULL ,
-  `email_message` TEXT NULL ,
-  `sms_enabled` TINYINT NOT NULL DEFAULT 0 ,
-  `sms_message` VARCHAR(160) NULL ,
-  `updated_at` DATETIME NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB;
+LOCK TABLES `logger` WRITE;
+/*!40000 ALTER TABLE `logger` DISABLE KEYS */;
+/*!40000 ALTER TABLE `logger` ENABLE KEYS */;
+UNLOCK TABLES;
 
+--
+-- Table structure for table `notification`
+--
 
--- -----------------------------------------------------
--- Table `patron`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `patron` ;
+DROP TABLE IF EXISTS `notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `notification` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `key` varchar(64) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `description` text,
+  `vars` text NOT NULL,
+  `email_enabled` tinyint(4) NOT NULL DEFAULT '0',
+  `email_subject` text,
+  `email_message` text,
+  `sms_enabled` tinyint(4) NOT NULL DEFAULT '0',
+  `sms_message` varchar(160) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE  TABLE IF NOT EXISTS `patron` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `user_id` INT NOT NULL ,
-  `name` VARCHAR(64) NOT NULL ,
-  `phone` VARCHAR(14) NOT NULL ,
-  `table_number` VARCHAR(10) NULL ,
-  `status` ENUM('Waiting','Notified','Notified/Replied','Seated','Cancelled/Left','Cancelled/At Bar') NOT NULL ,
-  `response` ENUM('ok on our way','stay at bar','cancel table') NULL ,
-  `time_in` DATETIME NOT NULL ,
-  `time_seated` DATETIME NULL ,
-  `removed` TINYINT NULL DEFAULT 0 ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_patron_user1_idx` (`user_id` ASC) ,
-  CONSTRAINT `fk_patron_user1`
-    FOREIGN KEY (`user_id` )
-    REFERENCES `user` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+--
+-- Dumping data for table `notification`
+--
 
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+INSERT INTO `notification` VALUES (1,'user_registered','User Registered','This notification is sent to new users that have just registered an account.','{\"first_name\":\"User\'s first name\",\"last_name\":\"User\'s last name\",\"email\":\"User\'s e-mail address\",\"phone\":\"User\'s phone number\",\"confirm_url\":\"The URL to activate the account\"}',1,'New Account: Please Confirm','Hi {first_name},\n\nThank you for registering an account! To complete registration, please confirm your account by clicking the link below:\n\n{confirm_url}',1,'Hi {first_name}, please confirm your account by visiting: {confirm_url}',NULL),(2,'user_confirmed','User Confirmed','This notification is sent to new users that have just confirmed their account by clicking on the confirmation link in the User Registered','{\"first_name\":\"User\'s first name\",\"last_name\":\"User\'s last name\",\"email\":\"User\'s e-mail address\",\"phone\":\"User\'s phone number\",\"login_url\":\"The URL to log in with\"}',1,'Account Confirmed','Hi {first_name},\n\nThank you for confirming your account. You may log in now by visiting:\n\n{login_url}',1,'Hi {first_name}, your account has been verified and you may log in now',NULL),(3,'user_forgot_password','User Forgot Password','This notification is sent to users who have requested a new password with the forgot password form.','{\"first_name\":\"User\'s first name\",\"last_name\":\"User\'s last name\",\"email\":\"User\'s e-mail address\",\"phone\":\"User\'s phone number\",\"reset_url\":\"The URL to reset the password\"}',1,'Reset Your Password','Hi {first_name},\n\nClick the link below to reset your account password:\n\n{reset_url}',1,'Hi {first_name}, click here to reset your password: {reset_url}',NULL);
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
+UNLOCK TABLES;
 
--- -----------------------------------------------------
--- Table `sms_exception`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `sms_exception` ;
+--
+-- Table structure for table `patron`
+--
 
-CREATE  TABLE IF NOT EXISTS `sms_exception` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `error` VARCHAR(128) NOT NULL ,
-  `data` TEXT NOT NULL ,
-  PRIMARY KEY (`id`) )
-ENGINE = InnoDB;
+DROP TABLE IF EXISTS `patron`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `patron` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `phone` varchar(14) NOT NULL,
+  `table_number` varchar(10) DEFAULT NULL,
+  `status` enum('Waiting','Notified','Seated','Cancelled/Left','Cancelled/At Bar') NOT NULL,
+  `response` enum('ok on our way','stay at bar','cancel table') DEFAULT NULL,
+  `time_in` datetime NOT NULL,
+  `time_seated` datetime DEFAULT NULL,
+  `removed` tinyint(4) DEFAULT '0',
+  `party_size` tinyint(3) unsigned DEFAULT '1',
+  `special_seating` enum('','High Chair','Strap','Booster','Wheel Chair','See Notes') NOT NULL DEFAULT '',
+  `table_location` varchar(200) NOT NULL DEFAULT '',
+  `notes` varchar(200) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `fk_patron_user1_idx` (`user_id`),
+  CONSTRAINT `fk_patron_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `patron`
+--
 
+LOCK TABLES `patron` WRITE;
+/*!40000 ALTER TABLE `patron` DISABLE KEYS */;
+/*!40000 ALTER TABLE `patron` ENABLE KEYS */;
+UNLOCK TABLES;
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+--
+-- Table structure for table `patron_feedback`
+--
 
--- -----------------------------------------------------
--- Data for table `user`
--- -----------------------------------------------------
-START TRANSACTION;
-INSERT INTO `user` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `phone_text_capable`, `confirm_code`, `created_at`, `updated_at`, `last_login`) VALUES (1, 'nick@lifthousedesign.com', '4f1f8def85fc3bf2dc58f04a667c8273b37a8b4c', 'Nick', 'Niebaum', '(304) 871-6066', 1, NULL, '2013-08-01 16:35:34', NULL, NULL);
+DROP TABLE IF EXISTS `patron_feedback`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `patron_feedback` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `table_number` char(50) NOT NULL,
+  `server_name` char(50) NOT NULL DEFAULT '',
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `name` char(50) DEFAULT NULL,
+  `phone` char(20) DEFAULT NULL,
+  `comment` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-COMMIT;
+--
+-- Dumping data for table `patron_feedback`
+--
 
--- -----------------------------------------------------
--- Data for table `role`
--- -----------------------------------------------------
-START TRANSACTION;
-INSERT INTO `role` (`user_id`, `role`) VALUES (1, 'administrator');
+LOCK TABLES `patron_feedback` WRITE;
+/*!40000 ALTER TABLE `patron_feedback` DISABLE KEYS */;
+/*!40000 ALTER TABLE `patron_feedback` ENABLE KEYS */;
+UNLOCK TABLES;
 
-COMMIT;
+--
+-- Table structure for table `role`
+--
 
--- -----------------------------------------------------
--- Data for table `notification`
--- -----------------------------------------------------
-START TRANSACTION;
-INSERT INTO `notification` (`id`, `key`, `name`, `description`, `vars`, `email_enabled`, `email_subject`, `email_message`, `sms_enabled`, `sms_message`, `updated_at`) VALUES (1, 'user_registered', 'User Registered', 'This notification is sent to new users that have just registered an account.', '{\"first_name\":\"User\'s first name\",\"last_name\":\"User\'s last name\",\"email\":\"User\'s e-mail address\",\"phone\":\"User\'s phone number\",\"confirm_url\":\"The URL to activate the account\"}', 1, 'New Account: Please Confirm', 'Hi {first_name},\n\nThank you for registering an account! To complete registration, please confirm your account by clicking the link below:\n\n{confirm_url}', 1, 'Hi {first_name}, please confirm your account by visiting: {confirm_url}', NULL);
-INSERT INTO `notification` (`id`, `key`, `name`, `description`, `vars`, `email_enabled`, `email_subject`, `email_message`, `sms_enabled`, `sms_message`, `updated_at`) VALUES (2, 'user_confirmed', 'User Confirmed', 'This notification is sent to new users that have just confirmed their account by clicking on the confirmation link in the User Registered', '{\"first_name\":\"User\'s first name\",\"last_name\":\"User\'s last name\",\"email\":\"User\'s e-mail address\",\"phone\":\"User\'s phone number\",\"login_url\":\"The URL to log in with\"}', 1, 'Account Confirmed', 'Hi {first_name},\n\nThank you for confirming your account. You may log in now by visiting:\n\n{login_url}', 1, 'Hi {first_name}, your account has been verified and you may log in now', NULL);
-INSERT INTO `notification` (`id`, `key`, `name`, `description`, `vars`, `email_enabled`, `email_subject`, `email_message`, `sms_enabled`, `sms_message`, `updated_at`) VALUES (3, 'user_forgot_password', 'User Forgot Password', 'This notification is sent to users who have requested a new password with the forgot password form.', '{\"first_name\":\"User\'s first name\",\"last_name\":\"User\'s last name\",\"email\":\"User\'s e-mail address\",\"phone\":\"User\'s phone number\",\"reset_url\":\"The URL to reset the password\"}', 1, 'Reset Your Password', 'Hi {first_name},\n\nClick the link below to reset your account password:\n\n{reset_url}', 1, 'Hi {first_name}, click here to reset your password: {reset_url}', NULL);
+DROP TABLE IF EXISTS `role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `role` (
+  `user_id` int(11) NOT NULL,
+  `role` varchar(32) NOT NULL,
+  PRIMARY KEY (`user_id`,`role`),
+  KEY `fk_role_user_idx` (`user_id`),
+  CONSTRAINT `fk_role_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-COMMIT;
+--
+-- Dumping data for table `role`
+--
 
--- -----------------------------------------------------
--- Data for table `patron`
--- -----------------------------------------------------
-START TRANSACTION;
-INSERT INTO `patron` (`id`, `user_id`, `name`, `phone`, `table_number`, `status`, `response`, `time_in`, `time_seated`, `removed`) VALUES (1, 1, 'Nick Niebaum', '(304) 871-6066', NULL, 'Waiting', NULL, '2013-08-19 21:49:26', NULL, 0);
-INSERT INTO `patron` (`id`, `user_id`, `name`, `phone`, `table_number`, `status`, `response`, `time_in`, `time_seated`, `removed`) VALUES (2, 1, 'Somiyah Said', '(304) 871-6066', NULL, 'Notified', NULL, '2013-08-19 20:49:36', NULL, 0);
-INSERT INTO `patron` (`id`, `user_id`, `name`, `phone`, `table_number`, `status`, `response`, `time_in`, `time_seated`, `removed`) VALUES (3, 1, 'Theresa Pauley', '(304) 871-6066', NULL, 'Seated', NULL, '2013-08-19 22:49:40', NULL, 0);
-INSERT INTO `patron` (`id`, `user_id`, `name`, `phone`, `table_number`, `status`, `response`, `time_in`, `time_seated`, `removed`) VALUES (4, 1, 'Mike Pauley', '(304) 871-6066', NULL, 'Cancelled/Left', NULL, '2013-08-19 23:49:43', NULL, 0);
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (2,'administrator');
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+UNLOCK TABLES;
 
-COMMIT;
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(64) NOT NULL,
+  `password` varchar(64) NOT NULL,
+  `first_name` varchar(32) NOT NULL,
+  `last_name` varchar(32) DEFAULT NULL,
+  `phone` varchar(14) NOT NULL,
+  `phone_text_capable` tinyint(4) NOT NULL DEFAULT '0',
+  `confirm_code` varchar(8) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (2,'bain.lifthousedesign@gmail.com','7505d64a54e061b7acd54ccd58b49dc43500b635','bain','mullin','(928) 202-9607',1,NULL,'2013-08-29 17:26:56','2013-09-18 21:33:18','2013-09-18 21:33:18');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2013-09-18 14:39:05

@@ -78,8 +78,20 @@ $(function(){
 				aTargets: [6]
 			},
 			{
-				sClass: 'actions',
+				sClass: 'table',
 				aTargets: [7]
+			},
+			{
+				sClass: 'table',
+				aTargets: [8]
+			},
+			{
+				sClass: 'table',
+				aTargets: [9]
+			},
+			{
+				sClass: 'actions',
+				aTargets: [10]
 			}
 		],
 		fnCreatedRow: function(row,data,i){
@@ -251,7 +263,10 @@ $(function(){
 				name: $(this).find('input[name="name"]').val(),
 				phone: $(this).find('input[name="phone"]').val(),
 				time_in: $(this).find('input[name="time_in"]').val(),
-				party_size: $(this).find('input[name="party_size"]').val()
+				party_size: $(this).find('input[name="party_size"]').val(),
+				table_location: $(this).find('input[name="table_location"]').val(),
+				special_seating: $(this).find('select[name="special_seating"]').val(),
+				notes: $(this).find('input[name="notes"]').val()
 			};
 			
 			// Send the request

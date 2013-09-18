@@ -1,5 +1,15 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/* Set Environment */
+// detect from host (local.domain.com => local, dev.domain.com => development, other => production)
+if(strpos($_SERVER['HTTP_HOST'],'local.') === 0)
+	$config['environment'] = 'local';
+elseif(strpos($_SERVER['HTTP_HOST'],'dev.') === 0)
+	$config['environment'] = 'development';
+else
+	$config['environment'] = 'production';
+
+
 $config['error_email'] = 'bain.lifthousedesign@gmail.com';
 
 /*
@@ -34,7 +44,7 @@ $config['database']=array(
 );
 
 // Overwrite default database settings with environment-specific settings
-$config['database']=array_merge($config['database'],$config['database_environments'][ENVIRONMENT]);
+$config['database']=array_merge($config['database'],$config['database_environments'][$config['environment']]);
 
 /*
 |--------------------------------------------------------------------------
@@ -80,7 +90,7 @@ $config['base_url_environment']=array(
 	'development'=>'http://tablequick.lifthousedesign.com',
 	'production'=>'http://tablequick.com',
 );
-$config['base_url']=$config['base_url_environment'][ENVIRONMENT];
+$config['base_url']=$config['base_url_environment'][$config['environment']];
 $config['assets_url']='/assets';
 $config['module_path']=APPPATH.'modules';
 

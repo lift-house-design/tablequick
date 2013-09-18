@@ -13,6 +13,22 @@
 		'required'=>TRUE,
 		'value'=>isset($patron) ? $patron['party_size'] : '',
 	)) ?>
+
+	<?= form_field('Table Location','table_location','text',array(
+		'value'=>isset($patron) ? $patron['table_location'] : '',
+	)) ?>
+	<div class="field">
+		<label for="special_seating">Special Seating</label>
+		<?php echo form_dropdown(
+			'special_seating',
+			array(''=>'','High Chair'=>'High Chair','Strap'=>'Strap','Booster'=>'Booster','Wheel Chair'=>'Wheel Chair','See Notes'=>'See Notes'),
+			(isset($patron) ? $patron['party_size'] : '')
+		) ?>
+	</div>
+	<?= form_field('Notes','notes','text',array(
+		'value'=>isset($patron) ? $patron['table_location'] : '',
+	)) ?>
+	
 	<?php echo form_field('Time In','time_in','readonly',array(
 		'value'=>date('Y-m-d H:i:s'),
 		'display'=>date('m/d/Y / h:ia'),

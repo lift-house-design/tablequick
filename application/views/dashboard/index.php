@@ -16,6 +16,9 @@
 			<th class="status">Status</th>
 			<th class="response">Response</th>
 			<th class="table">Table #</th>
+			<th class="actions">Table Location</th>
+			<th class="actions">Special Seating</th>
+			<th class="actions">Notes</th>
 			<th class="actions">Action</th>
 		</tr>
 	</thead>
