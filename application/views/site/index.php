@@ -32,6 +32,13 @@ table{
 }
 </style>
 <div style="text-align:center;font-size:16px;margin:10px auto;min-width:600px">
+	<img src="/assets/img/home_logo.png"/>
+	<div style="height:2px;margin:8px 0px;background-color:rgb(245,246,247);width:100%"></div>
+	<img src="/assets/img/home_image.png"/>
+	<div style="height:7px;margin:8px 0px 12px;background-color:rgb(245,246,247)"></div>
+	<div style="height:50px;margin:4px 0px;background-color:rgb(245,246,247)"></div>
+	<div style="height:1px;margin:0px;background-color:rgb(245,246,247)"></div>
+	<hr/>
 	<a href="/sign-up" style="font-size:22px;font-weight:bold">
 		<span style="text-decoration:underline">
 			Sign-up
@@ -124,7 +131,7 @@ table{
 				<a href="/sign-up" class="button primary">Try it for free!</a>
 			</td>
 			<td id="bottom-tiny-text">
-					Basic Version available now. GP Version available October 1st, 2013.<br/>
+					Basic Version available now. GM Version available October 1st, 2013.<br/>
 					TableQuick.com is a product of <a target="_blank" href="http://lifthousedesign.com">Lift House Design</a>.
 			</td>
 		</tr>

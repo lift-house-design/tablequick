@@ -46,9 +46,6 @@
 	</div>
 </div>
 <div class="wrapper">
-	<header>
-		<?php echo anchor(($logged_in && $this->uri->rsegment(1)!='dashboard' ? 'dashboard' : '/'),'TableQuick') ?>
-	</header>
 	<div id="contents">
 		<?php if(!empty($notifications)): ?>
 			<div class="notifications">
