@@ -32,7 +32,7 @@ table{
 }
 </style>
 <div style="text-align:center;font-size:16px;margin:10px auto;min-width:600px">
-	<img src="/assets/img/home_logo.png"/>
+	<a style="font-family: Lato,sans-serif;font-size:95px;color:rgb(31,111,183);line-height:80px;position:relative;top:-10px" href="/">TABLE<b>QUICK</b></a><br/>
 	<div style="height:2px;margin:8px 0px;background-color:rgb(245,246,247);width:100%"></div>
 	<img src="/assets/img/home_image.png"/>
 	<div style="height:7px;margin:8px 0px 12px;background-color:rgb(245,246,247)"></div>
@@ -137,3 +137,4 @@ table{
 		</tr>
 	</table>
 </div>
+<link href="http://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css"/>
