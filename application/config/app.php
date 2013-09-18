@@ -31,9 +31,10 @@ $config['database_environments']=array(
 		'password'=>'Dsb6Zf3npPi8',
 		'database'=>'thomas_tablequick',
 	),
-	'production'=>array( // TBD
-		'username'=>'',
-		'password'=>'',
+	'production'=>array(
+		'username'=>'thomas',
+		'password'=>'Dsb6Zf3npPi8',
+		'database'=>'thomas_tablequick',
 	),
 );
 $config['database']=array(
