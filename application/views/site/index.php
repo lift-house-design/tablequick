@@ -34,7 +34,7 @@ table{
 <div style="text-align:center;font-size:16px;margin:10px auto;min-width:600px">
 	<a style="font-family: Lato,sans-serif;font-size:95px;color:rgb(31,111,183);line-height:80px;position:relative;top:-10px" href="/">TABLE<b>QUICK</b></a><br/>
 	<div style="height:2px;margin:8px 0px;background-color:rgb(245,246,247);width:100%"></div>
-	<img src="/assets/img/home_image.png"/>
+	<img src="/assets/img/home_image2.png"/>
 	<div style="height:7px;margin:8px 0px 12px;background-color:rgb(245,246,247)"></div>
 	<div style="height:50px;margin:4px 0px;background-color:rgb(245,246,247)"></div>
 	<div style="height:1px;margin:0px;background-color:rgb(245,246,247)"></div>
